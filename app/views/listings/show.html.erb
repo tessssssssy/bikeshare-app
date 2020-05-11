@@ -7,5 +7,10 @@
     <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
 <%end%>  
 
-<%= link_to 'Make Booking', new_listing_booking_path %>
+<h1>Availability</h1>
+
+<%(Date.today..Date.today + 31).each do |date| %>
+<p><%= "#{date} : #{@listing.date_available?(date)}"%></p>
+<%end%>
+<%= link_to 'Make Booking', new_listing_booking_path(@listing) %> 
 
