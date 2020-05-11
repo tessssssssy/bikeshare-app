@@ -1,17 +1,25 @@
 class BookingsController < ApplicationController
     def new
+        @listing = Listing.find(params[:listing_id])
         @booking = Booking.new
     end
     def create
-        @booking = current_user.bookings.create(booking_params)            
+        p params
+        p current_user
+        @booking = Booking.new
+        @booking.user_id = current_user.id
+        @booking.listing_id = params[:listing_id]
+        @booking.start_date = params[:booking][:start_date]
+        @booking.end_date = params[:booking][:end_date]            
         if @booking.save
-            redirect_to root_path
-            # this is where you should direct to stripe to make deposit
+            redirect_to listings_path
         end
     end
+
     private
     def booking_params
-      params.require(:booking).permit(:start_time, :end_time, :user_id, :listing_id)
+      params.require(:booking).permit(:start_time, :end_time)
     end
 end
+
 
