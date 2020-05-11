@@ -1,0 +1,9 @@
+<h1 class="listing-title"><%=@listing.title%></h1>
+<p><%=@listing.description%></p>
+<%= image_tag @listing.image if @listing.image.attached? %>
+
+<% if current_user == @listing.user %>
+    <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
+    <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
+<%end%>  
+
