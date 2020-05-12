@@ -2,7 +2,16 @@ class ListingsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
     before_action :find_listing ,only: [:show, :edit, :update, :destroy] 
     def index
-        @listings = Listing.search(params[:search])
+        @listings = []
+        locations = Location.search_city(params[:search]) 
+        Listing.all.each do |listing|
+          locations.each do |location|
+            if listing.location_id == location.id
+              @listings << listing
+            end
+          end
+        end
+        @listings
     end
 
     def show

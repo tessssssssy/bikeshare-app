@@ -6,14 +6,17 @@ class Listing < ApplicationRecord
   has_one_attached :image
   def self.search(search)
     if search
-      @listings = []
-      locations = Location.where(city: search)
-      locations.each do |location|
-        location.listings.each do |listing|
-          @listings << listing
-        end
-      end
-      p @listings
+      location = Location.find_by(city: search)
+      @listings = Listing.includes(:tags).where('location.id' => image_tag.id).all
+      # self.where(location_id: location)
+    else
+      @listings = Listing.all
+    end      
+  end
+  
+  def self.search_category(search)
+    if search
+      self.where(category: category)
     else
       @listings = Listing.all
     end      
@@ -23,6 +26,16 @@ class Listing < ApplicationRecord
     bookings = Booking.all
     bookings.each do |booking|
         if booking.start_date < date && booking.end_date > date
+            return false
+        end
+    end
+    return true
+  end
+
+  def get_availablity(start_date, end_date)
+    bookings = Booking.all
+    bookings.each do |booking|
+        if booking.start_date < start_date && booking.end_date > end_date
             return false
         end
     end

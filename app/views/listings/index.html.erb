@@ -1,4 +1,9 @@
 <div class="outer-container">
+    <%= form_tag(listings_path, method: 'get') do %>
+      <%= text_field_tag(:search, params[:search]) %>
+      <%= submit_tag("Enter location", name: nil) %>
+    <% end %>
+
 <h1 class="heading">Bikeshare App</h1>
 <h3>A peer to peer Bikeshare service</h3>
 <div class="content-container">
@@ -10,6 +15,9 @@
     <%end%>
 </div>
 </div>
+
+
+
 
 
 

@@ -1,11 +1,6 @@
 <nav>
     <%= link_to "Home", listings_path %>
 
-    <%= form_tag(listings_path, method: 'get') do %>
-      <%= text_field_tag(:search, params[:search]) %>
-      <%= submit_tag("Enter location", name: nil) %>
-    <% end %>
-
     <% if user_signed_in? %>
         <%= link_to "Add Listing", new_listing_path %>
         <%= link_to "Logout", destroy_user_session_path, method: :delete %>
