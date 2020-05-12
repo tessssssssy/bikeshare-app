@@ -4,6 +4,20 @@ class Listing < ApplicationRecord
   belongs_to :location
   has_many :bookings, dependent: :destroy
   has_one_attached :image
+  def self.search(search)
+    if search
+      @listings = []
+      locations = Location.where(city: search)
+      locations.each do |location|
+        location.listings.each do |listing|
+          @listings << listing
+        end
+      end
+      p @listings
+    else
+      @listings = Listing.all
+    end      
+  end
 
   def date_available?(date)
     bookings = Booking.all

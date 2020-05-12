@@ -2,7 +2,7 @@ class ListingsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
     before_action :find_listing ,only: [:show, :edit, :update, :destroy] 
     def index
-        @listings = Listing.all
+        @listings = Listing.search(params[:search])
     end
 
     def show
@@ -43,7 +43,7 @@ class ListingsController < ApplicationController
 
     private
     def listing_params
-      params.require(:listing).permit(:title, :description, :type, :image, :instant_pickup)
+      params.require(:listing).permit(:title, :description, :category, :image, :instant_pickup)
     end
     def location_params
       params.require(:location).permit(:address, :post_code, :city, :country, :listings)
