@@ -10,10 +10,14 @@ class ListingsController < ApplicationController
 
     def new
         @listing = Listing.new
+        @location = Location.new
     end
 
     def create
-      @listing = current_user.listings.create(listing_params)
+      p params
+      p current_user
+      location = Location.create(location_params)
+      @listing = current_user.listings.create(listing_params.merge(location_id: location.id))
       if @listing.save
         redirect_to @listing
       else
@@ -39,7 +43,10 @@ class ListingsController < ApplicationController
 
     private
     def listing_params
-      params.require(:listing).permit(:title, :description, :type, :image)
+      params.require(:listing).permit(:title, :description, :image)
+    end
+    def location_params
+      params.require(:location).permit(:address, :post_code, :city, :country, :listings)
     end
   
     def find_listing

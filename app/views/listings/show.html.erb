@@ -9,8 +9,26 @@
 
 <h1>Availability</h1>
 
-<%(Date.today..Date.today + 31).each do |date| %>
-<p><%= "#{date} : #{@listing.date_available?(date)}"%></p>
-<%end%>
+<div class="calendar">
+    <div>Mon</div>
+    <div>Tue</div>
+    <div>Wed</div>
+    <div>Thur</div>
+    <div>Fri</div>
+    <div>Sat</div>
+    <div>Sun</div>
+    <%(Date.today..Date.today + 31).each do |date| %>
+        <% if @listing.date_available?(date)%>
+        <div class="available">
+            <p><%=date.day%></p>
+        </div>
+        <%else%>
+        <div class="booked">
+            <p><%=date.day%></p>
+        </div>
+        <%end%>
+    <%end%>
+</div>
+
 <%= link_to 'Make Booking', new_listing_booking_path(@listing) %> 
 
