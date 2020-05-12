@@ -7,6 +7,11 @@
     <%= form.label :description %>
     <%= form.text_area :description %>
 </div>
+<div class="form-field">
+    <%= form.label :type %>
+    <%= form.select :type, ['road', 'mtb', 'city/commuter', 'traithlon/TT', 'cyclocross/gravel', 'cargo', 'other' ]%>
+</div>
+
 <%= fields_for(@location) do |f| %>
     <div class="form-field">
         <%= f.label :address %>
@@ -40,4 +45,6 @@
     <%= form.submit %>
 </div>
 <% end %>
+
+
 

@@ -1,4 +1,5 @@
 class Listing < ApplicationRecord
+  validates :title, :description, presence: true
   belongs_to :user
   belongs_to :location
   has_many :bookings, dependent: :destroy

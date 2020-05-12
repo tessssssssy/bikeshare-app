@@ -1,0 +1,16 @@
+<div class="outer-container">
+<h1 class="heading">Bikeshare App</h1>
+<h3>A peer to peer Bikeshare service</h3>
+<div class="content-container">
+    <% @listings.each do |listing| %>
+        <div class="listing-container">  
+            <%= link_to listing.title, listing, class: 'listing-title'%>
+            <%= image_tag listing.image if listing.image.attached? %>
+        </div>
+    <%end%>
+</div>
+</div>
+
+
+
+

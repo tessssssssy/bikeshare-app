@@ -1,6 +1,23 @@
 // Place all the styles related to the Listings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .heading {
+        font-size: 48pt;
+        margin: 20px 0px;
+    }
+    .content-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 75%;
+        margin: 50px auto;
+        justify-content: center;
+    }
+}
+
 
 .form-container {
     margin: 75px auto;
