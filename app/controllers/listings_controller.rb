@@ -43,7 +43,7 @@ class ListingsController < ApplicationController
 
     private
     def listing_params
-      params.require(:listing).permit(:title, :description, :image)
+      params.require(:listing).permit(:title, :description, :image, :instant_pickup)
     end
     def location_params
       params.require(:location).permit(:address, :post_code, :city, :country, :listings)
