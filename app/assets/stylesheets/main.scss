@@ -1,0 +1,17 @@
+@import 'listings';
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+nav {
+    height: 50px;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    a {
+        text-decoration: none;
+        margin: 10px;
+        color: black;
+    }
+}

@@ -1,24 +1,49 @@
+
 <div class="outer-container">
+<div class="search-bar">
     <%= form_tag(listings_path, method: 'get') do %>
-    <%= label_tag(:search, "Search city:") %>
+    <div class="search-field">
+      <%= label_tag(:search, "Search city:") %>
       <%= text_field_tag(:search, params[:search]) %>
-      <%= date_field_tag(:start_date, params[:start_date]) %>
+    </div>
+    <div class="search-field">
+      <%= label_tag(:start_date, "start date") %>
+      <%= date_field_tag(:start_date, params[:start_date])%>
+    </div>
+    <div class="search-field">
+       <%= label_tag(:end_date, "end date") %>
        <%= date_field_tag(:end_date, params[:end_date]) %>
+    </div>
+    <div class="search-field">
        <%= label_tag(:instant_pickup, "Instant pickup available") %>
        <%= check_box_tag(:instant_pickup, params[:instant_picku]) %>
+    </div>
       <%= submit_tag("Search", name: nil) %>
     <% end %>
-
-<h1 class="heading">Bikeshare App</h1>
-<h3>A peer to peer Bikeshare service</h3>
-<div class="content-container">
-    <% @listings.each do |listing| %>
-        <div class="listing-container">  
-            <%= link_to listing.title, listing, class: 'listing-title'%>
-            <%= image_tag listing.image if listing.image.attached? %>
-        </div>
-    <%end%>
 </div>
+<div class="main-container">
+<div class="map-container">
+    <div style="height: 700px; width: 500px;" id="map"></div>
+</div>
+    <div class="listings-container">
+    <div class="listings-header">
+    <h2>Listings in <%=params[:search]%></h2>
+    </div>
+        <% @listings.each do |listing| %>
+            <div class="listing-container">
+                <div class="image-container">  
+                    <%= image_tag listing.image if listing.image.attached? %>
+                </div>
+                <div class="listing-info">
+                    <%= link_to listing.title, listing, class: 'listing-title'%>
+                    <p><%=listing.description%></p>
+                </div>
+            </div>
+        <%end%>
+    </div>
+
+</div>
+<%= javascript_pack_tag "leaflet/index" %>
 </div>
 
 

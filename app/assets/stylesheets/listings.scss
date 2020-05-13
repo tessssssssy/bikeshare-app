@@ -5,19 +5,59 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    .heading {
-        font-size: 48pt;
-        margin: 20px 0px;
-    }
-    .content-container {
+    width: 100%;
+    .search-bar {
+        width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        width: 75%;
-        margin: 50px auto;
         justify-content: center;
+        height: 100px;
+        align-items: center;
+        background-color: grey;
+        position: relative;
+        top: 50px;
+        z-index: 10;
+        form {
+            display: flex;
+            .search-field {
+                input {
+                    height: 30px;
+                }
+            }
+        }
+    }
+    .main-container {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        z-index: 1;
+        // margin-top: 100px;
+        .listings-container {
+            height: 700px;
+            overflow: scroll;
+            .listing-container {
+                display: flex;
+                .image-container {
+                    width: 340px;
+                    height: 240px;
+                    // border: 1px solid black;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    img {
+                        border-radius: 10px;
+                        width: 300px;
+                        height: 200px;
+                        object-fit: cover;
+                    }
+                }
+                .listing-info {
+                    width: 500px;
+                    padding: 20px;
+                }
+            }
+        }
     }
 }
-
 
 .form-container {
     margin: 75px auto;

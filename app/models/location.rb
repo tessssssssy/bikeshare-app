@@ -1,5 +1,7 @@
 class Location < ApplicationRecord
     has_many :listings
+    geocoded_by :address
+    after_validation :geocode
     def self.search_city(search)
         if search
             self.where(city: search)

@@ -3,6 +3,7 @@ class BookingsController < ApplicationController
     def index
        @bookings = current_user.bookings
     end
+    
     def new
         @listing = Listing.find(params[:listing_id])
         @booking = Booking.new

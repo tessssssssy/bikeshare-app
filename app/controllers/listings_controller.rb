@@ -19,8 +19,15 @@ class ListingsController < ApplicationController
         if params[:instant_pickup]
           @listings = @listings.filter { |listing| listing.instant_pickup }
         end
-        return @listings 
+      if params[:type] == "json"
+        data = @listings.map do |listing|
+          [listing.location.latitude, listing.location.longitude]
+        end 
+        render json: {data: data}
+      end
+      p @listings
     end
+
     def manage
       @listings = current_user.listings
     end
@@ -62,10 +69,10 @@ class ListingsController < ApplicationController
 
     private
     def listing_params
-      params.require(:listing).permit(:title, :description, :category, :image, :instant_pickup)
+      params.require(:listing).permit(:title, :description, :category, :image, :instant_pickup, )
     end
     def location_params
-      params.require(:location).permit(:address, :post_code, :city, :country, :listings)
+      params.require(:location).permit(:address, :post_code, :city, :country, :listings, :latitude, :longitude)
     end
   
     def find_listing
