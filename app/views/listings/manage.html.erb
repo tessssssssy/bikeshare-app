@@ -1,0 +1,7 @@
+<% @listings.each do |listing| %>
+<p><%=listing.title%></p>
+    <%= link_to "Edit", "/listings/#{listing.id}/edit", class: 'edit-button' %>
+    <%= link_to "Manage Availability", "/listings/#{listing.id}/bookings/new" %>
+    <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%> 
+<%end%>
+

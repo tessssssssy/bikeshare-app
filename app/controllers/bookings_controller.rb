@@ -1,6 +1,7 @@
 class BookingsController < ApplicationController
+    before_action :authenticate_user!
     def index
-        @bookings = current_user.bookings
+       @bookings = current_user.bookings
     end
     def new
         @listing = Listing.find(params[:listing_id])

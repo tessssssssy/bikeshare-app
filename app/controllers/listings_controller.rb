@@ -21,7 +21,9 @@ class ListingsController < ApplicationController
         end
         return @listings 
     end
-
+    def manage
+      @listings = current_user.listings
+    end
     def show
     end
 

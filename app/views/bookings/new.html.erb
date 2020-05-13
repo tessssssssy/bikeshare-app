@@ -1,5 +1,9 @@
 <div class="form-container">
-<h1>Make Booking</h1>
+<% if @listing.user_id == current_user.id %>
+    <h1>Mark unavailable</h1>
+<%else%>
+    <h1>Make Booking</h1>
+<%end%>
 
 <%= form_for [@listing, @booking] do |form| %>
 <div class="form-field">
@@ -23,7 +27,7 @@
 </div>
 
 <div class='actions'>
-    <%= form.submit %>
+    <%= form.submit 'Submit'%>
 </div>
 <% end %>
 </div>
