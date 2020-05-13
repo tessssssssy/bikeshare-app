@@ -32,10 +32,12 @@ class Listing < ApplicationRecord
     return true
   end
 
-  def get_availablity(start_date, end_date)
-    bookings = Booking.all
+  def check_availability(start_date, end_date)
+    bookings = self.bookings.all
+    p Date.parse(start_date)
     bookings.each do |booking|
-        if booking.start_date < start_date && booking.end_date > end_date
+        if booking.start_date < Date.parse(start_date) && 
+           booking.end_date > Date.parse(end_date)
             return false
         end
     end

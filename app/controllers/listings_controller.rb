@@ -11,7 +11,13 @@ class ListingsController < ApplicationController
             end
           end
         end
-        @listings
+        if params[:start_date] && params[:end_date]
+          @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) }   
+        end  
+        if params[:instant_pickup]
+          @listings = @listings.filter { |listing| listing.instant_pickup }
+        end
+        return @listings 
     end
 
     def show
