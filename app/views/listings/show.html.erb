@@ -1,36 +1,46 @@
-<h1 class="listing-title"><%=@listing.title%></h1>
-<p><%=@listing.description%></p>
-<%= image_tag @listing.image if @listing.image.attached? %>
-
-<% if current_user == @listing.user %>
-    <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
-    <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
-<%end%>  
-<%if @listing.instant_pickup %>
-<p>Instant Pickup Available</p>
-<%end%>
-<h1>Availability</h1>
-
-<div class="calendar">
-    <div>Mon</div>
-    <div>Tue</div>
-    <div>Wed</div>
-    <div>Thur</div>
-    <div>Fri</div>
-    <div>Sat</div>
-    <div>Sun</div>
-    <%(Date.today..Date.today + 31).each do |date| %>
-        <% if @listing.date_available?(date)%>
-        <div class="available">
-            <p><%=date.day%></p>
+<div class="show-container">
+<div class="calendar-container">
+    <div class="calendar-content">
+        <h3>Availability</h3>
+        <div class="calendar">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thur</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+            <%(Date.today..Date.today + 31).each do |date| %>
+                <% if @listing.date_available?(date)%>
+                <div class="available">
+                    <p><%=date.day%></p>
+                </div>
+                <%else%>
+                <div class="booked">
+                    <p><%=date.day%></p>
+                </div>
+                <%end%>
+            <%end%>
         </div>
-        <%else%>
-        <div class="booked">
-            <p><%=date.day%></p>
         </div>
+    </div>
+    <div class="listing-container">
+        <h1 class="listing-title"><%=@listing.title%></h1>
+        <%= image_tag @listing.image if @listing.image.attached? %>
+        <p><%=@listing.description%></p>
+        <%if @listing.instant_pickup %>
+            <p>Instant Pickup Available</p>
         <%end%>
-    <%end%>
+        <%= link_to 'Make Booking', new_listing_booking_path(@listing) %>
+        <% if current_user == @listing.user %>
+            <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
+            <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
+        <%end%>  
+    </div>
 </div>
 
-<%= link_to 'Make Booking', new_listing_booking_path(@listing) %> 
+
+
+
+ 
 

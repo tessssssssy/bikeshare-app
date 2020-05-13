@@ -10,27 +10,35 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        height: 100px;
+        height: 80px;
         align-items: center;
         background-color: grey;
-        position: relative;
+        position: fixed;
         top: 50px;
         z-index: 10;
         form {
             display: flex;
             .search-field {
+                margin: 0px 5px;
+                
                 input {
                     height: 30px;
+                    font-size: 12pt;
+                    border-radius: 5px;
+                }
+                #instant_pickup {
+                    height: 25px;
+                    width: 25px;
                 }
             }
         }
     }
     .main-container {
+        margin-top: 130px;
         display: flex;
         width: 100%;
         justify-content: flex-start;
         z-index: 1;
-        // margin-top: 100px;
         .listings-container {
             height: 700px;
             overflow: scroll;
@@ -62,12 +70,13 @@
 .form-container {
     margin: 75px auto;
     width: 300px;
+    z-index: 2;
     a {
         text-decoration: none;
     }
     form {
         display: flex;
-        margin: 0 auto;     
+        margin: 0px auto;     
         flex-direction: column;
         height: 200px;
         .actions {
@@ -100,16 +109,50 @@
     }
     
 }
+.show-container {
+    display: flex;
+    width: 80%;
+    margin: 100px auto;
+    .calendar-container {
+        margin-top: 85px;
+        background-color: lightgray;
+        border-radius: 10px;
+        height: 400px;
+        .calendar-content {
+            margin: 10px;
+            .calendar {
+                width: 350px;
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                grid-template-rows: 50px;
+                p {
+                    margin-top: 0px;
+                }
+                
+                .available {
+                    background-color: lightcyan;
+                    font-size: 10pt;
+                    height: 50px;
+                    padding: 2px;
+    
+                }
+                .booked {
+                    background-color: lightseagreen;
+                    font-size: 10pt;
+                    height: 50px;
+                    padding: 2px;
+                }
+            }
 
-.calendar {
-    width: 350px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 50px;
-    .available {
-        background-color: lightcyan;
+        }
+        
+        
     }
-    .booked {
-        background-color: lightseagreen;
+    .listing-container {
+        margin-left: 20px;
+        img {
+            border-radius: 10px;
+           
+        }
     }
 }

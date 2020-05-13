@@ -3,31 +3,32 @@
 <div class="search-bar">
     <%= form_tag(listings_path, method: 'get') do %>
     <div class="search-field">
-      <%= label_tag(:search, "Search city:") %>
-      <%= text_field_tag(:search, params[:search]) %>
+      
+      <%= text_field_tag(:search, params[:search], placeholder: "Enter city") %>
     </div>
     <div class="search-field">
-      <%= label_tag(:start_date, "start date") %>
-      <%= date_field_tag(:start_date, params[:start_date])%>
+      
+      <%= date_field_tag(:start_date, params[:start_date], placeholder: "From")%>
     </div>
     <div class="search-field">
-       <%= label_tag(:end_date, "end date") %>
-       <%= date_field_tag(:end_date, params[:end_date]) %>
+       
+       <%= date_field_tag(:end_date, params[:end_date], placeholder: "To") %>
     </div>
-    <div class="search-field">
+    <%# <div class="search-field">
        <%= label_tag(:instant_pickup, "Instant pickup available") %>
-       <%= check_box_tag(:instant_pickup, params[:instant_picku]) %>
-    </div>
+       <%# <%= check_box_tag(:instant_pickup, params[:instant_picku]) %> 
+    <%# </div> %> 
       <%= submit_tag("Search", name: nil) %>
     <% end %>
 </div>
+
 <div class="main-container">
 <div class="map-container">
     <div style="height: 700px; width: 500px;" id="map"></div>
 </div>
     <div class="listings-container">
     <div class="listings-header">
-    <h2>Listings in <%=params[:search]%></h2>
+        <h2>Listings in <%=params[:search]%></h2>
     </div>
         <% @listings.each do |listing| %>
             <div class="listing-container">
