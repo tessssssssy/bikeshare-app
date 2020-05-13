@@ -23,7 +23,7 @@ class Listing < ApplicationRecord
   end
 
   def date_available?(date)
-    bookings = Booking.all
+    bookings = self.bookings.all
     bookings.each do |booking|
         if booking.start_date < date && booking.end_date > date
             return false

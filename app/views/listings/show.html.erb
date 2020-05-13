@@ -6,7 +6,9 @@
     <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
     <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
 <%end%>  
-
+<%if @listing.instant_pickup %>
+<p>Instant Pickup Available</p>
+<%end%>
 <h1>Availability</h1>
 
 <div class="calendar">
