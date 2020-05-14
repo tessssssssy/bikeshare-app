@@ -3,7 +3,9 @@ class BookingsController < ApplicationController
     def index
        @bookings = current_user.bookings
     end
-    
+    def show
+        @booking = Booking.find(params[:id])
+    end
     def new
         @listing = Listing.find(params[:listing_id])
         @booking = Booking.new
@@ -17,11 +19,10 @@ class BookingsController < ApplicationController
         @booking.start_date = params[:booking][:start_date]
         @booking.end_date = params[:booking][:end_date]            
         if @booking.save
-            redirect_to listings_path
+            redirect_to "/listings/#{@booking.listing_id}/bookings/#{@booking.id}"
         end
     end
 
-    
     private
     def booking_params
       params.require(:booking).permit(:start_time, :end_time)
