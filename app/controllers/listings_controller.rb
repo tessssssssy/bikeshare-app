@@ -32,6 +32,7 @@ class ListingsController < ApplicationController
       @listings = current_user.listings
     end
     def show
+      @review = Review.new
     end
 
     def new

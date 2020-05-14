@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :listings do
+    resources :reviews
     resources :bookings, only: [ :new, :create, :destroy]
   end
   get '/bookings', to: 'bookings#index'

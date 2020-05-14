@@ -35,9 +35,33 @@
         <% if current_user == @listing.user %>
             <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
             <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
-        <%end%>  
+        <%end%>
+        <h3>Leave a review</h3>
+        <%= form_for [@listing, @review] do |form| %>
+        <div class="form-field">
+            <%= form.text_area :body %> 
+        </div>
+        <div class="form-field">
+            <%= form.label :rating %>
+            <%= form.select :rating, ['1','2','3','4','5']%>
+        </div>
+        <div class='actions'>
+            <%= form.submit 'Submit'%>
+        </div>
+        <% end %>
+        <% @listing.reviews.each do |review| %>
+        <div class="review-container">
+        <p><%=review.body%></p>
+        <p>Rating: <%=review.rating%></p>
+        <%if current_user.id == review.user_id %>
+        <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete %>
+        <%end%>
+        </div>
+        <% end %>
     </div>
 </div>
+
+
 
 
 

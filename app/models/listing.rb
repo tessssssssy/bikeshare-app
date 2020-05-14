@@ -3,6 +3,7 @@ class Listing < ApplicationRecord
   belongs_to :user
   belongs_to :location
   has_many :bookings, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_one_attached :image
   def self.search(search)
     if search
