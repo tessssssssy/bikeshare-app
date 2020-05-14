@@ -4,6 +4,7 @@ class ListingsController < ApplicationController
     def index
         @listings = []
         locations = Location.search_city(params[:search]) 
+        p locations
         Listing.all.each do |listing|
           locations.each do |location|
             if listing.location_id == location.id
@@ -11,6 +12,7 @@ class ListingsController < ApplicationController
             end
           end
         end
+        p "******#{@listings}********"
         if params[:start_date] && params[:end_date]
           if params[:start_date] != "" && params[:end_date] != ""
             @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
@@ -20,12 +22,13 @@ class ListingsController < ApplicationController
           @listings = @listings.filter { |listing| listing.instant_pickup }
         end
       if params[:type] == "json"
+        
         data = @listings.map do |listing|
           [listing.location.latitude, listing.location.longitude]
         end 
         render json: {data: data}
       end
-      p @listings
+      
     end
 
     def manage

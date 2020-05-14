@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+    def new
+    end
     def get_stripe_id
         @listing = Listing.find(params[:id])
         session_id = Stripe::Checkout::Session.create(

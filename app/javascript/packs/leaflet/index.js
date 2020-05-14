@@ -1,7 +1,10 @@
 import { icon } from './icon'
 import { tileLayer } from './tileLayer'
 
-const renderMap = async () => {
+const renderMap = async (e) => {
+  if (!map) {
+    e.preventDefault()
+  }
   const response = await fetch(`/listings?type=json`)
   const { data } = await response.json()
   const map = await tileLayer(data)
@@ -11,5 +14,8 @@ const renderMap = async () => {
   L.featureGroup(markers).addTo(map)
 }
 
-renderMap()
+const button = document.querySelector('#search-button')
+button.addEventListener('click', renderMap)
+
+
 
