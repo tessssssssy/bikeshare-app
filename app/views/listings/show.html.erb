@@ -31,10 +31,10 @@
         <%if @listing.instant_pickup %>
             <p>Instant Pickup Available</p>
         <%end%>
-        <%= link_to 'Make Booking', new_listing_booking_path(@listing) %>
+        <%= link_to 'Make Booking', new_listing_booking_path(@listing), class: 'button' %>
         <% if current_user == @listing.user %>
-            <%= link_to "Edit", edit_listing_path, class: 'edit-button' %>
-            <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%>  
+            <%= link_to "Edit", edit_listing_path, class: 'button' %>
+            <%= link_to "Delete", @listing , method: :delete, class: 'button'%>  
         <%end%>
         <h3>Leave a review</h3>
         <%= form_for [@listing, @review] do |form| %>
@@ -46,7 +46,7 @@
             <%= form.select :rating, ['1','2','3','4','5']%>
         </div>
         <div class='actions'>
-            <%= form.submit 'Submit'%>
+            <%= form.submit 'Submit', class: 'button'%>
         </div>
         <% end %>
         <% @listing.reviews.each do |review| %>
@@ -54,7 +54,7 @@
         <p><%=review.body%></p>
         <p>Rating: <%=review.rating%></p>
         <%if current_user.id == review.user_id %>
-        <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete %>
+        <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete, class: 'button' %>
         <%end%>
         </div>
         <% end %>

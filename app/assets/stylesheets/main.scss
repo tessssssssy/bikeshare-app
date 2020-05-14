@@ -5,6 +5,9 @@ body {
     width: 100%;
     margin: 0px;
 }
+a {
+    text-decoration: none;
+}
 
 nav {
     height: 50px;
@@ -27,3 +30,11 @@ footer {
     width: 100%;
     background-color: white;
 }
+
+.button {
+    padding: 5px;
+    font-size: 12pt;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+

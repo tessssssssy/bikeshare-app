@@ -41,8 +41,6 @@ class ListingsController < ApplicationController
     end
 
     def create
-      p params
-      p current_user
       location = Location.create(location_params)
       @listing = current_user.listings.create(listing_params.merge(location_id: location.id))
       if @listing.save
@@ -53,10 +51,16 @@ class ListingsController < ApplicationController
     end
 
     def edit
+      @location = Location.find(@listing.location_id)
     end
 
-    def update
-      if @listing.update(listing_params)
+    def update 
+      # needs conditional for if location has not changed - check if two locations are identical
+      p params
+      @location = Location.find(@listing.location_id)
+      new_location = Location.create(location_params)
+      @listing.location_id = new_location.id
+      if @listing.update(listing_params)     
         redirect_to @listing
       else
         render :edit
@@ -70,7 +74,7 @@ class ListingsController < ApplicationController
 
     private
     def listing_params
-      params.require(:listing).permit(:title, :description, :category, :image, :instant_pickup, )
+      params.require(:listing).permit(:title, :description, :category, :image, :instant_pickup)
     end
     def location_params
       params.require(:location).permit(:address, :post_code, :city, :country, :listings, :latitude, :longitude)
