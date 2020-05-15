@@ -17,7 +17,12 @@ class BookingsController < ApplicationController
         @booking.user_id = current_user.id
         @booking.listing_id = params[:listing_id]
         @booking.start_date = params[:booking][:start_date]
-        @booking.end_date = params[:booking][:end_date]            
+        @booking.end_date = params[:booking][:end_date] 
+        # check if current user owns listing and mark confirmed = true
+        listing = Listing.find(params[:listing_id])
+        if current_user.id == listing.user_id
+            @booking.confirmed = true
+        end      
         if @booking.save
             redirect_to "/listings/#{@booking.listing_id}/bookings/#{@booking.id}"
         end

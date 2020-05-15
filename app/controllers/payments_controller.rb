@@ -22,7 +22,7 @@ class PaymentsController < ApplicationController
               booking_id: @booking.id
             }
           },
-          success_url: "#{root_url}payments/success?userId=#{current_user.id}&listingId=#{@booking.id}",
+          success_url: "#{root_url}payments/success?userId=#{current_user.id}&bookingId=#{@booking.id}",
           cancel_url: "#{root_url}listings"
         ).id
         p session_id

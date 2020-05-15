@@ -26,7 +26,7 @@ class ListingsController < ApplicationController
         data = @listings.map do |listing|
           [listing.location.latitude, listing.location.longitude]
         end 
-        render json: {data: data}
+        render json: { data: data }
       end
       
     end
