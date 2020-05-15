@@ -31,6 +31,15 @@ class PaymentsController < ApplicationController
       def success
       end
       def webhook
+        # payment_id = params[:data][:object][:payment_intent]
+        # booking_id = params[:data][:object][:metadata][:booking_id]
+        user_id = params[:data][:object][:metadata][:user_id]
+        payment = Stripe::PaymentIntent.retrieve(payment_id)
+        booking_id = payment.metadata.booking_id
+        user_id = payment.metadata.user_id
+        booking = Booking.find(booking_id)
+        booking.confirmed = true
+        booking.save
       end
 end
 

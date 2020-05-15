@@ -3,7 +3,7 @@ import '@stripe/stripe-js';
 
 const button = document.getElementById("stripe")
 button.addEventListener("click", (e) => {
-  const id = location.pathname.split("/")[2]
+  const id = location.pathname.split("/")[4]
   console.log(id)
   fetch(`/payments/session?id=${id}`)
   .then((res) => res.json())

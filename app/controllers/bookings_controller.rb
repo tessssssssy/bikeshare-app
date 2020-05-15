@@ -24,7 +24,11 @@ class BookingsController < ApplicationController
             @booking.confirmed = true
         end      
         if @booking.save
-            redirect_to "/listings/#{@booking.listing_id}/bookings/#{@booking.id}"
+            if current_user.id == listing.user_id
+                redirect_to listings_path
+            else
+                redirect_to "/listings/#{@booking.listing_id}/bookings/#{@booking.id}"
+            end  
         end
     end
 
