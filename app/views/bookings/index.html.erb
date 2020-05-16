@@ -2,5 +2,6 @@
 <p><%=booking.listing.title%></p>
 <p><%=booking.start_date%></p>
 <p><%=booking.end_date%></p>
+<%= link_to "Cancel Booking", "/listings/#{booking.listing_id}/bookings/#{booking.id}" , method: :delete, class: 'button'%> 
 <%end%>
 

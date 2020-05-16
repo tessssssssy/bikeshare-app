@@ -1,5 +1,6 @@
 <div class="payment">
  <%= link_to "Pay Deposit", "", id: "stripe" %>
+ <%= link_to "Cancel Booking", "/listings/#{@booking.listing_id}/bookings/#{@booking.id}" , method: :delete, class: 'button'%> 
 </div>
 
 <%= javascript_pack_tag "stripe" %>
