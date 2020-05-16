@@ -28,6 +28,7 @@ class Booking < ApplicationRecord
         extra_hours = booking.end_time - booking.start_time
         return days_cost(listing.daily_rate) + hours_cost(listing.hourly_rate, listing.daily_rate)
       end
+    end
   end
 end
 
