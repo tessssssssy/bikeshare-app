@@ -31,7 +31,7 @@
         <%if @listing.instant_pickup %>
             <p>Instant Pickup Available</p>
         <%end%>
-        <%= link_to 'Make Booking', new_listing_booking_path(@listing), class: 'button' %>
+        <%= link_to current_user == @listing.user ? 'Manage Availability' : 'Make Booking', new_listing_booking_path(@listing), class: 'button' %>
         <% if current_user == @listing.user %>
             <%= link_to "Edit", edit_listing_path, class: 'button' %>
             <%= link_to "Delete", @listing , method: :delete, class: 'button'%>  
