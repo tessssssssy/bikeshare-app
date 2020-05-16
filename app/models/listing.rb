@@ -26,7 +26,7 @@ class Listing < ApplicationRecord
   def date_available?(date)
     bookings = self.bookings.all
     bookings.each do |booking|
-        if booking.start_date < date && booking.end_date > date
+        if booking.start_date < date && booking.end_date > date && booking.confirmed == true
             return false
         end
     end
@@ -35,7 +35,6 @@ class Listing < ApplicationRecord
 
   def check_availability(start_date, end_date)
     bookings = self.bookings.all
-    p Date.parse(start_date)
     bookings.each do |booking|
         if booking.start_date < Date.parse(start_date) && 
            booking.end_date > Date.parse(end_date)
