@@ -1,3 +1,5 @@
+require 'booking.rb'
+
 class Listing < ApplicationRecord
   validates :title, :description, presence: true
   belongs_to :user
@@ -24,7 +26,7 @@ class Listing < ApplicationRecord
   end
 
   def date_available?(date)
-    bookings = self.bookings.all
+    bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
         if booking.start_date < date && booking.end_date > date && booking.confirmed == true
             return false

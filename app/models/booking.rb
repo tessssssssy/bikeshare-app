@@ -1,32 +1,40 @@
+require 'listing.rb'
+require 'shared_methods.rb'
+
 class Booking < ApplicationRecord
+  include SharedMethods
   belongs_to :user
   belongs_to :listing
   # calculating cost of a booking less than a full day
   # or calculate the cost of extra hours on a multi day booking
-  def hours_cost(hourly_rate, daily_rate)
+  def hours_cost
+    listing = Listing.find(self.listing_id)
     hours = self.end_time - self.start_time
-    hours_cost = hours * hourly_rate
-    if hours_cost > daily_rate
-      return daily_rate
+    hours_price = hours * listing.hourly_rate
+    if hours_price > listing.daily_rate
+      return listing.daily_rate
     else
-      return hours_cost
+      return hours_price
+    end
   end
 
-  def days_cost(daily_rate)
-    days = self.end_date - self.start_date
+  def days_cost
+    listing = Listing.find(self.listing_id)
+    daily_rate = listing.daily_rate
+    days = date_to_integer(self.end_date) - date_to_integer(self.start_date)
     return days * daily_rate
   end
 
-  def calculate_cost(booking)
-    listing = Listing.find(booking.listing_id)
-    if booking.start_date == booking.end_date
-      return hours_cost(listing.hourly_rate, listing.daily_rate)
+  def calculate_cost
+    listing = Listing.find(self.listing_id)
+    if self.start_date == self.end_date
+      return self.hours_cost
     else
-      if booking.start_time >= booking.end_time
-        return days_cost(listing.daily_rate)
+      if self.start_time >= self.end_time
+        return self.days_cost
       else
-        extra_hours = booking.end_time - booking.start_time
-        return days_cost(listing.daily_rate) + hours_cost(listing.hourly_rate, listing.daily_rate)
+        extra_hours = self.end_time - self.start_time
+        return self.days_cost + self.hours_cost
       end
     end
   end
