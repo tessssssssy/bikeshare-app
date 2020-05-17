@@ -4,16 +4,16 @@ class Location < ApplicationRecord
     after_validation :geocode
     def self.search_city(search)
         if search
-            self.where(city: search)
+            return Location.where(city: search)
           else
-            @locations = Location.all
+            return Location.all
           end  
     end
     def self.search_country(search)
         if search
-            self.where(country: search)
+            return Loaction.where(country: search)
           else
-            @locations = Location.all
+            return Location.all
         end  
     end
 end

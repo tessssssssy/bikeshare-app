@@ -4,7 +4,10 @@ class ListingsController < ApplicationController
     def index
         @listings = []
         locations = Location.search_city(params[:search])
-        p locations
+        if params[:search]
+          coordinates = Geocoder.search(params[:search]).first.coordinates
+          p "****************#{coordinates}*******************"
+        end
         Listing.all.each do |listing|
           locations.each do |location|
             if listing.location_id == location.id
@@ -30,15 +33,13 @@ class ListingsController < ApplicationController
         else
           @listings = @listings.sort_by { |listing| listing.reviews.length }.reverse     
         end
-        p params[:sort_method]
+        p coordinates
       if params[:type] == "json"
-        
         data = @listings.map do |listing|
           [listing.location.latitude, listing.location.longitude]
-        end 
-        render json: { data: data }
-      end
-      
+        end
+        render json: { data: data, center: coordinates }
+      end    
     end
 
     def manage
