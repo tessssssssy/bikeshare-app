@@ -11,12 +11,16 @@
             <div>Sat</div>
             <div>Sun</div>
             <%(Date.today..Date.today + 31).each do |date| %>
-                <% if @listing.date_available?(date)%>
-                <div class="available">
+                <% if !@listing.date_available?(date)%>
+                <div class="booked">
+                    <p><%=date.day%></p>
+                </div>
+                <%elsif @listing.partial_availability(date)%>
+                <div class="partial">
                     <p><%=date.day%></p>
                 </div>
                 <%else%>
-                <div class="booked">
+                <div class="available">
                     <p><%=date.day%></p>
                 </div>
                 <%end%>

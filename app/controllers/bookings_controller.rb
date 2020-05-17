@@ -43,10 +43,12 @@ class BookingsController < ApplicationController
         elsif @booking.start_date == @booking.end_date && @booking.start_time >= @booking.end_time
             flash[:notice] = "Finish time must be after start time"
             redirect_to "/listings/#{@listing.id}/bookings/new"
-        elsif @booking.start_date.to_s == Date.today.to_s && @booking.instant_pickup == nil
-            flash[:notice] = "Must be booked at least one day in advance"
         elsif !@listing.check_availability(@booking.start_date, @booking.end_date)
             flash[:notice] = "Booking Dates Unavailable"
+            redirect_to "/listings/#{@listing.id}/bookings/new"
+        elsif !@listing.time_available?(@booking.start_time, @booking.start_date) || !@listing.time_available?(@booking.end_time, @booking.end_date)
+            flash[:notice] = "Available Times: #{@listing.get_available_times(@booking.start_date)}, #{@listing.get_available_times(@booking.end_date)}"
+            # flash[:notice] = @listing.get_available_times(@booking.end_date)
             redirect_to "/listings/#{@listing.id}/bookings/new"
         else
             if @booking.save

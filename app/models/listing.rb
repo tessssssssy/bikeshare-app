@@ -36,7 +36,7 @@ class Listing < ApplicationRecord
   end
 
   def check_availability(start_date, end_date)
-    bookings = self.bookings.all
+    bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
         if booking.start_date < start_date && 
            booking.end_date > end_date
@@ -46,28 +46,58 @@ class Listing < ApplicationRecord
     return true
   end
 
-  def time_available?(time)
-    bookings = Booking.all
+  def time_available?(time, date)
+    bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
-      if booking.start_time <= time && booking.end_time >= time
+      if booking.start_date == date && booking.end_date == date
+        if booking.start_time <= time && booking.end_time >= time
           return false
+        end
+      end
+      if booking.start_date == date
+        if booking.start_time <= time 
+          return false
+        end
+      end
+      if booking.end_date == date
+        if booking.end_time >= time
+          return false
+        end
       end
     end
   return true
   end
 
   def partial_availability(date)
-    # date must be available
+    bookings = Booking.where(listing_id: self.id)
     if !date_available?(date)
       return false
     end
-    # but must have some bookings
     bookings.each do |booking|
       if booking.start_date == date || booking.end_date == date
         return true
       end
     end
     return false
+  end
+
+  def get_available_times(date)
+    bookings = Booking.where(listing_id: self.id)
+    start_time = 0
+    end_time = 24
+    bookings.each do |booking|
+      if booking.start_date == date
+        if end_time > booking.start_time
+          end_time = booking.start_time
+        end
+      end
+      if booking.end_date == date
+        if start_time < booking.end_time
+          start_time = booking.end_time
+        end
+      end
+    end
+    return "#{date} : available from #{start_time} to #{end_time}"
   end
 end
 
