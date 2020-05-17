@@ -1,3 +1,4 @@
+
 class BookingsController < ApplicationController
     before_action :authenticate_user!
     def index
@@ -15,6 +16,13 @@ class BookingsController < ApplicationController
 
     def create
         @booking = Booking.new
+        #     user_id: current_user.id,
+        #     listing_id: params[:listing_id],
+        #     start_date: params[:start_date],
+        #     end_date: params[:end_date],
+        #     start_time: params[:start_time],
+        #     end_time: params[:end_time]
+        # )
         @booking.user_id = current_user.id
         @booking.listing_id = params[:listing_id]
         @booking.start_date = params[:booking][:start_date]
@@ -27,11 +35,19 @@ class BookingsController < ApplicationController
             @booking.confirmed = true
         end
         if @booking.start_date == nil || @booking.end_date == nil
+            flash[:notice] = "Please select a start date and an end date"
             redirect_to "/listings/#{@listing.id}/bookings/new"
-            flash[:notice] = "Please select a start date and an end date"           
+        elsif  date_to_integer(@booking.start_date) > date_to_integer(@booking.end_date)
+            flash[:notice] = "End date cannot be before start date"
+            redirect_to "/listings/#{@listing.id}/bookings/new"
+        elsif @booking.start_date == @booking.end_date && @booking.start_time >= @booking.end_time
+            flash[:notice] = "Finish time must be after start time"
+            redirect_to "/listings/#{@listing.id}/bookings/new"
+        elsif @booking.start_date.to_s == Date.today.to_s && @booking.instant_pickup == nil
+            flash[:notice] = "Must be booked at least one day in advance"
         elsif !@listing.check_availability(@booking.start_date, @booking.end_date)
-            redirect_to "/listings/#{@listing.id}/bookings/new"
             flash[:notice] = "Booking Dates Unavailable"
+            redirect_to "/listings/#{@listing.id}/bookings/new"
         else
             if @booking.save
                 if current_user.id == @listing.user_id
@@ -54,6 +70,9 @@ class BookingsController < ApplicationController
     private
     def booking_params
       params.require(:booking).permit(:start_time, :end_time, :start_date, :end_date, :listing_id)
+    end
+    def date_to_integer(date)
+        date.to_s.split('-').join('').to_i
     end
 end
 

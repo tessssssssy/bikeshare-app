@@ -8,7 +8,7 @@
 <%= form_for [@listing, @booking] do |form| %>
 <div class="form-field">
     <%= form.label :start_date %>
-    <%= form.date_field :start_date, min: Date.today %> 
+    <%= form.date_field :start_date, min: @listing.instant_pickup ? Date.today : Date.today + 1 %> 
 </div>
 
 <div class="form-field">
