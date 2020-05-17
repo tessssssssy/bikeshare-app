@@ -1,6 +1,8 @@
 class ListingsController < ApplicationController
+    load_and_authorize_resource 
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :find_listing ,only: [:show, :edit, :update, :destroy] 
+    before_action :find_listing ,only: [:show, :edit, :update, :destroy]
+    before_action :set_user_listing, only: [:edit]
     def index
         @listings = []
         locations = Location.search_city(params[:search])
@@ -65,6 +67,9 @@ class ListingsController < ApplicationController
     end
 
     def edit
+      # if current_user.id != @listing.user_id
+      #   redirect_to listings_path
+      # end
       @location = Location.find(@listing.location_id)
     end
 
@@ -96,6 +101,15 @@ class ListingsController < ApplicationController
   
     def find_listing
       @listing = Listing.find(params[:id])
+    end
+
+    def set_user_listing
+      id = params[:id]
+      @listing = current_user.listings.find_by_id(id)
+    
+      if @listing == nil
+        redirect_to listings_path
+      end
     end
 end
 
