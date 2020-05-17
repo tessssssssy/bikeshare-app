@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
     before_action :find_listing ,only: [:show, :edit, :update, :destroy] 
     def index
         @listings = []
-        locations = Location.search_city(params[:search]) 
+        locations = Location.search_city(params[:search])
         p locations
         Listing.all.each do |listing|
           locations.each do |location|
@@ -13,14 +13,24 @@ class ListingsController < ApplicationController
           end
         end
         p "******#{@listings}********"
+        # show only listings available for these dates
         if params[:start_date] && params[:end_date]
           if params[:start_date] != "" && params[:end_date] != ""
             @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
           end  
         end  
+        # show only listings with instant pickup available
         if params[:instant_pickup]
           @listings = @listings.filter { |listing| listing.instant_pickup }
         end
+        # sort listings by most reviews
+        # if listings.sort by most reviewed
+        if params[:sort_method] == ['Highest rated']
+          @listings = @listings.sort_by { |listing| listing.average_rating }.reverse
+        else
+          @listings = @listings.sort_by { |listing| listing.reviews.length }.reverse     
+        end
+        p params[:sort_method]
       if params[:type] == "json"
         
         data = @listings.map do |listing|

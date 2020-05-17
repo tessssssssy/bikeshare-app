@@ -99,6 +99,13 @@ class Listing < ApplicationRecord
     end
     return "#{date} : available from #{start_time} to #{end_time}"
   end
+  def average_rating
+    sum = 0
+    self.reviews.each do |review|
+      sum += review.rating
+    end
+    return sum.to_f / self.reviews.length
+  end
 end
 
 

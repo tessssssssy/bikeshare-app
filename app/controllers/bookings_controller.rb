@@ -2,8 +2,10 @@
 class BookingsController < ApplicationController
     before_action :authenticate_user!
     def index
-       @bookings = current_user.bookings
+       @bookings = current_user.bookings.where(date_to_integer(:end_date) >= date_to_integer(Date.today)).sort_by { |booking| booking.start_date }
+    #    @pastbookings = current_user.bookings.where(date_to_integer(:end_date) < date_to_integer(Date.today))
     end
+
     def show
         @booking = Booking.find(params[:id])
         @listing = Listing.find(@booking.listing_id)
