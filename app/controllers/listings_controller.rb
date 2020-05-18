@@ -32,7 +32,7 @@ class ListingsController < ApplicationController
         end
         # sort listings by most reviews
         # if listings.sort by most reviewed
-        if params[:sort_method] == ['0']
+        if params[:sort_method] == "0"
           @listings = @listings.sort_by { |listing| listing.average_rating }.reverse
         else
           @listings = @listings.sort_by { |listing| listing.reviews.length }.reverse     

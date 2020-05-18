@@ -1,13 +1,20 @@
-<% @listings.each do |listing| %>
-<p><%=listing.title%></p>
-    <%listing.bookings.each do |booking|%>
-    <p>Booking id: <%=booking.id%></p>
-    <p>From: <%=booking.start_date%> at <%=booking.start_time%></p>
-    <p>To: <%=booking.end_date%> at <%=booking.end_time%>
-    <p>Contact user: <%=booking.user.email%></p>
-    <%end%>
-    <%= link_to "Edit", "/listings/#{listing.id}/edit", class: 'edit-button' %>
-    <%= link_to "Manage Availability", "/listings/#{listing.id}/bookings/new" %>
-    <%= link_to "Delete", @listing , method: :delete, class: 'edit-button'%> 
-<%end%>
+<div class="manage-listings-container">
+<h1>My Listings</h1>
 
+    <% @listings.each do |listing| %>
+    <p><%=link_to listing.title, listing %></p>
+    <%= image_tag listing.image if listing.image.attached? %>
+        <%listing.bookings.each do |booking|%>
+            <p>Booking id: <%=booking.id%></p>
+            <p>From: <%=booking.start_date%> at <%=booking.start_time%></p>
+            <p>To: <%=booking.end_date%> at <%=booking.end_time%>
+            <p>Contact user: <%=booking.user.email%></p>
+        <%end%>
+        <div class="links-container">
+            <%= link_to "Edit", "/listings/#{listing.id}/edit", class: 'button' %>
+            <%= link_to "Manage Availability", "/listings/#{listing.id}/bookings/new", class: 'button'%>
+            <%= link_to "Delete", @listing , method: :delete, class: 'button'%> 
+        </div>
+    <%end%>
+</div>
+s

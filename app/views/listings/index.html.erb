@@ -23,19 +23,14 @@
       <%= submit_tag "Search", name: nil, class: 'button', id: 'search-button' %>
     <%end%>
     </div>
-
-     <%= form_tag listings_path, method: 'get', class: 'sort-form' do %>
-     <p>Sort by:</p>
-     <div class="sort-option">
-        <%= radio_button :sort_method, params[:sort_method], 1, :checked => true %> 
-        <%= label :sort_method, 'Most ratings' %>
-    </div>
-    <div class="sort-option">
-        <%= radio_button :sort_method, params[:sort_method], 0 %>
-        <%= label :sort_method, 'Highest rated' %>   
-    </div>
-        <%= submit_tag "sort", name: nil, class: 'button', id: 'sort-button' %>
-      <%end%>
+    <form action="/listings" method="get">
+    <label for="sort_method">Highest Rated</label>
+    <input type="radio" name="sort_method"value="0" checked/>
+    <label for="sort_method">Most Ratings</label>
+    <input type="radio" name="sort_method" value="1"/>
+    <input type="submit" value="Sort">
+    </form>
+    
 </div>
 
 
@@ -57,7 +52,12 @@
                 </div>
                 <div class="listing-info">
                     <%= link_to listing.title, listing, class: 'listing-title'%>
-                    <p><%=listing.description%></p>
+                    <p class="listing-description"><%=listing.description%></p>                    
+                    <div class="details-container">
+                        <p>Category: <%=listing.category%></p>
+                        <p>Hourly rate: $<%=listing.hourly_rate%></p>
+                        <p>Daily rate: $<%=listing.daily_rate%></p>
+                    </div>
                 </div>
             </div>
         <%end%>
