@@ -20,15 +20,15 @@
        <%# <%= check_box_tag(:instant_pickup, params[:instant_pickup]) %> 
     <%# </div> %> 
         
-      <%= submit_tag "Search", name: nil, class: 'button', id: 'search-button' %>
+      <%= submit_tag "Search", name: nil, class: 'button blue-button', id: 'search-button' %>
     <%end%>
     </div>
-    <form action="/listings" method="get">
+    <form action="/listings" method="get" class="sort-form">
     <label for="sort_method">Highest Rated</label>
     <input type="radio" name="sort_method"value="0" checked/>
     <label for="sort_method">Most Ratings</label>
     <input type="radio" name="sort_method" value="1"/>
-    <input type="submit" value="Sort">
+    <input type="submit" value="Sort" class="button edit-button">
     </form>
     
 </div>

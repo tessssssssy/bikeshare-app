@@ -1,20 +1,20 @@
-<div class="manage-listings-container">
-<h1>My Listings</h1>
 
+<div class="manage-container">
+<h1>My Listings</h1>
+<div class="manage-listings-container">
     <% @listings.each do |listing| %>
+     <div class="manage-listing-container">
     <p><%=link_to listing.title, listing %></p>
     <%= image_tag listing.image if listing.image.attached? %>
-        <%listing.bookings.each do |booking|%>
-            <p>Booking id: <%=booking.id%></p>
-            <p>From: <%=booking.start_date%> at <%=booking.start_time%></p>
-            <p>To: <%=booking.end_date%> at <%=booking.end_time%>
-            <p>Contact user: <%=booking.user.email%></p>
-        <%end%>
+    <p><%=listing.bookings.length%> bookings</p>
         <div class="links-container">
             <%= link_to "Edit", "/listings/#{listing.id}/edit", class: 'button' %>
             <%= link_to "Manage Availability", "/listings/#{listing.id}/bookings/new", class: 'button'%>
             <%= link_to "Delete", @listing , method: :delete, class: 'button'%> 
         </div>
+    </div>
     <%end%>
 </div>
-s
+</div>
+
+

@@ -31,17 +31,6 @@
                     border: none;
                     color: lightgray;
                 }
-                #instant_pickup {
-                    height: 25px;
-                    width: 25px;
-                }
-                #search-button {
-                    background-color: green;
-                }
-            }
-            .submit-button {
-                font-size: 32pt;
-                padding: 20px;
             }
         }
         .sort-form {
@@ -106,6 +95,8 @@
                     }
                     .details-container {
                         display: flex;
+                        font-size: 11pt;
+                        font-weight: 700;
                         p {
                             margin-right: 10px;
                             margin-top: 0px;
@@ -122,20 +113,19 @@
     margin: 75px auto;
     width: 300px;
     z-index: 2;
+    padding-top: 50px;
     a {
         text-decoration: none;
+    }
+    h1 {
+        font-weight: 300;
     }
     form {
         display: flex;
         margin: 0px auto;     
         flex-direction: column;
-        height: 200px;
-        .actions {
-            input {
-                border: 2px solid black;
-            }
-            
-        }
+        // height: 200px;
+        padding-bottom: 50px;
         .form-field {
             display: flex;
             flex-direction: column;
@@ -151,6 +141,18 @@
                 border-radius: 5px;
                 font-size: 12pt;
             }
+        }
+        .currency-field {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            label {
+                margin-right: 20px;
+            }
+            input {
+                width: 100px;
+            }
+        
         }
     
     }
@@ -250,6 +252,9 @@
             }
 
         }
+        .review-form-container {
+            margin-top: 50px;
+        }
         .reviews-container {
             margin-top: 50px;
         }
@@ -262,22 +267,34 @@
     justify-content: center;
     height: 100vh;
 }
-
-.manage-listings-container {
+.manage-container {
     margin-top: 100px;
-    margin-left: 100px;
-    img {
-        border-radius: 10px;
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-        box-shadow: 6px 7px 23px -1px rgba(173,173,173,1); 
+    margin-left: 50px;
+    h1 {
+        font-weight: 300;
     }
-    .links-container {
-        margin-top: 10px;
+    .manage-listings-container {
+        width: 90%;
         display: flex;
-        .button {
-            margin-right: 10px;
+        flex-wrap: wrap;
+        .manage-listing-container {
+            margin: 20px;
+            img {
+                border-radius: 10px;
+                width: 300px;
+                height: 200px;
+                object-fit: cover;
+                box-shadow: 6px 7px 23px -1px rgba(173,173,173,1); 
+            }
+            .links-container {
+                margin-top: 10px;
+                display: flex;
+                .button {
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }
+
+

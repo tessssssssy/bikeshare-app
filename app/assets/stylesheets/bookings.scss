@@ -1,45 +1,63 @@
 // Place all the styles related to the Bookings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-
-.form-container {
-    margin: 75px auto;
-    width: 300px;
-    a {
-        text-decoration: none;
-    }
-    form {
-        display: flex;
-        margin: 0 auto;     
-        flex-direction: column;
-        height: 200px;
-        .actions {
-            input {
-                font-size: 12pt;
-                background-color: rgb(215, 224, 247);
-                border: 2px solid black;
-                border-radius: 5px;
-                padding: 5px;
-            }
-            
+.content-container {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 80px;
+    .form-container {
+        // margin: 75px auto;
+        margin-left: 20px;
+        width: 300px;
+        a {
+            text-decoration: none;
         }
-        .field {
+        form {
             display: flex;
+            margin: 0 auto;     
             flex-direction: column;
-            margin: 10px 0px;
-            input {
-                margin: 10px 0px;
-                border-radius: 5px;
-                font-size: 12pt;
+            height: 200px;
+            .actions {
+                input {
+                    font-size: 12pt;
+                    background-color: rgb(215, 224, 247);
+                    border: 2px solid black;
+                    border-radius: 5px;
+                    padding: 5px;
+                }
+                
             }
-            textarea {
+            .field {
+                display: flex;
+                flex-direction: column;
                 margin: 10px 0px;
-                height: 100px;
-                border-radius: 5px;
-                font-size: 12pt;
+                input {
+                    margin: 10px 0px;
+                    border-radius: 5px;
+                    font-size: 12pt;
+                }
+                textarea {
+                    margin: 10px 0px;
+                    height: 100px;
+                    border-radius: 5px;
+                    font-size: 12pt;
+                }
             }
-        }
+        
+        }        
+    }
     
+}
+
+.bookings-container {
+    margin: 100px;
+    .booking-container {
+        margin-top: 50px;
+        .booking-header {
+            font-size: 20pt;
+        }
     }
     
 }

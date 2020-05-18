@@ -52,31 +52,45 @@
         <%if @listing.instant_pickup %>
             <p>Instant Pickup Available</p>
         <%end%>
-        <%= link_to current_user == @listing.user ? 'Manage Availability' : 'Make Booking', new_listing_booking_path(@listing), class: 'button' %>
-        <% if current_user == @listing.user %>
-            <%= link_to "Edit", edit_listing_path, class: 'button' %>
-            <%= link_to "Delete", @listing , method: :delete, class: 'button'%>  
+        <%= link_to current_user == @listing.user ? 'Manage Availability' : 'Make Booking', new_listing_booking_path(@listing), class: 'button blue-button' %>
+        <% if user_signed_in? && current_user == @listing.user %>
+            <%= link_to "Edit", edit_listing_path, class: 'button edit-button' %>
+            <%= link_to "Delete", @listing , method: :delete, class: 'button delete-button',  :data => {:confirm => 'Are you sure?'}%>  
         <%end%>
-        <h3>Leave a review</h3>
-        <%= form_for [@listing, @review] do |form| %>
-        <div class="form-field">
-            <%= form.text_area :body, class: 'review-body'%> 
-        </div>
-        <div class="form-field">
-            <%= form.label :rating %>
-            <%= form.select :rating, ['5','4','3','2','1']%>
-        </div>
-        <div class='actions'>
-            <%= form.submit 'Submit', class: 'button'%>
+        <% if user_signed_in? && current_user != @listing.user %>
+        <div class="review-form-container">
+            <h3>Leave a review</h3>
+            <%= form_for [@listing, @review] do |form| %>
+            <div class="form-field">
+                <%= form.text_area :body, class: 'review-body'%> 
+            </div>
+            <div class="form-field">
+                <%= form.label :rating %>
+                <%= form.select :rating, ['5','4','3','2','1']%>
+            </div>
+            <div class='actions'>
+                <%= form.submit 'Submit', class: 'button blue-button'%>
+            </div>
+            <% end %>
         </div>
         <% end %>
+        <% if user_signed_in? && current_user == @listing.user %>
+        <h3>Current bookings</h3>
+            <%@listing.bookings.each do |booking|%>
+                <p>Booked by <%=booking.user.name%></p>
+                <p>From: <%=booking.start_date%> at <%=booking.start_time%>:00</p>
+                <p>To: <%=booking.end_date%> at <%=booking.end_time%>:00</p>
+                <p>Contact user: <%=booking.user.email%></p>
+            <%end%>
+        <%end%>
+
         <div class="reviews-container">
-            <h3>Reviews for <%=@listing.title%></h3>
+            <h3>Reviews</h3>
             <% @listing.reviews.each do |review| %>
             <div class="review-container">
-            <p><%=review.body%></p>
+            <p><%=review.user.name%>: <%=review.body%></p>
             <p>Rating: <%=review.rating%></p>
-            <%if current_user.id == review.user_id %>
+            <%if user_signed_in? && current_user.id == review.user_id %>
             <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete, class: 'button' %>
             <%end%>   
         <% end %>

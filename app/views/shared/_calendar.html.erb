@@ -1,0 +1,44 @@
+<div class="calendar-container">
+    <div class="calendar-content">
+        <h3>Availability</h3>
+        <div class="calendar">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thur</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+            <%(Date.today..Date.today + 31).each do |date| %>
+                <% if !@listing.date_available?(date)%>
+                <div class="booked">
+                    <p><%=date.day%></p>
+                </div>
+                <%elsif @listing.partial_availability(date)%>
+                <div class="partial">
+                    <p><%=date.day%></p>
+                </div>
+                <%else%>
+                <div class="available">
+                    <p><%=date.day%></p>
+                </div>
+                <%end%>
+            <%end%>
+        </div>
+        <div class="calendar-keys">
+            <div class="calendar-key">
+                <div class="box" id="available-key"></div>
+                <p>Available all day</p>
+            </div>
+            <div class="calendar-key">
+                <div class="box" id="partial-key"></div>
+                <p>Some times available</p>
+            </div>
+            <div class="calendar-key">
+                <div class="box" id="booked-key"></div>
+                <p>Not available</p>
+            </div>
+        </div>
+    </div>
+</div>
+

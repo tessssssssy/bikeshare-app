@@ -1,39 +1,42 @@
-<div class="form-container">
-<% if @listing.user_id == current_user.id %>
-    <h1>Mark unavailable</h1>
-<%else%>
-    <h1>Make Booking</h1>
-<%end%>
+<div class="content-container">
+    <%= render 'shared/calendar' %>
+    <div class="form-container">
+        <% if @listing.user_id == current_user.id %>
+            <h1>Mark unavailable</h1>
+        <%else%>
+            <h1>Make Booking</h1>
+        <%end%>
 
-<%= form_for [@listing, @booking] do |form| %>
-<div class="form-field">
-    <%= form.label :start_date %>
-    <%= form.date_field :start_date, min: @listing.instant_pickup ? Date.today : Date.today + 1 %> 
-</div>
+        <%= form_for [@listing, @booking] do |form| %>
+            <div class="form-field">
+                <%= form.label :start_date %>
+                <%= form.date_field :start_date, min: @listing.instant_pickup ? Date.today : Date.today + 1 %> 
+            </div>
 
-<div class="form-field">
-    <%= form.label :start_time %>
-    <%= form.select :start_time, (0..23) %> 
-</div>
+            <div class="form-field">
+                <%= form.label :start_time %>
+                <%= form.select :start_time, (0..23) %> 
+            </div>
 
-<div class="form-field">
-    <%= form.label :end_date %>
-    <%= form.date_field :end_date, min: Date.today %> 
-</div>
+            <div class="form-field">
+                <%= form.label :end_date %>
+                <%= form.date_field :end_date, min: Date.today %> 
+            </div>
 
-<div class="form-field">
-    <%= form.label :end_time %>
-    <%= form.select :end_time, (0..23) %>
-</div>
+            <div class="form-field">
+                <%= form.label :end_time %>
+                <%= form.select :end_time, (0..23) %>
+            </div>
 
-<div class='actions'>
-    <%= form.submit 'Submit'%>
-</div>
-<% end %>
-</div>
+            <div class='actions'>
+                <%= form.submit 'Submit', class: 'button blue-button'%>
+            </div>
+        <% end %>
+    </div>
 
-<% flash.each do |type, msg| %>
-  <div>
-    <%= msg %>
-  </div>
-<% end %>
+    <% flash.each do |type, msg| %>
+    <div>
+        <%= msg %>
+    </div>
+    <% end %>
+</div>

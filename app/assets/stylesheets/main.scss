@@ -1,6 +1,7 @@
 @import 'listings';
 @import 'payments';
 @import 'pages';
+@import 'bookings';
 
 body {
     font-family: 'Raleway', sans-serif;
@@ -52,11 +53,127 @@ footer {
     font-size: 12pt;
     color: white;
     border-radius: 5px;
-    background-color: grey;
+    // background-color: grey;
     // border: 2px solid black;
+}
+.blue-button {
+    background-color: dodgerblue;
+}
+.edit-button {
+    background-color: darkcyan;
+}
+.delete-button {
+    background-color: coral;
 }
 
 .button:hover {
     cursor: pointer;
 }
+
+.calendar-container {
+    margin-top: 85px;
+    background-color: #f0f0f5;
+    border-radius: 10px;
+    width: 400px;
+    height: 500px;
+    box-shadow: 3px 3px 10px -1px rgba(173,173,173,1);
+    .calendar-content {
+        margin: 10px;
+        .calendar {
+            width: 350px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: 50px;
+            p {
+                margin-top: 0px;
+            }
+            .available {
+                background-color: white;
+                font-size: 10pt;
+                height: 50px;
+                padding: 2px;
+
+            }
+            .booked {
+                background-color: lightseagreen;
+                font-size: 10pt;
+                height: 50px;
+                padding: 2px;
+            }
+            .partial {
+                background-color: lightcyan;
+                font-size: 10pt;
+                height: 50px;
+                padding: 2px;
+            }
+        }
+        .calendar-keys {
+            .calendar-key {
+                display: flex;
+                margin-top: 10px;
+                .box {
+                    width: 20px;
+                    height: 20px;
+                }
+                #available-key {
+                    background-color: white;
+                }
+                #booked-key {
+                    background-color: lightseagreen;
+                }
+                #partial-key {
+                    background-color: lightcyan;
+                }
+                p {
+                    margin: 0px 10px;
+                }
+            }     
+        }
+
+    }
+     
+}
+
+// .form-container {
+//     margin: 75px auto;
+//     margin-left: 20px;
+//     width: 100%;
+//     a {
+//         text-decoration: none;
+//     }
+//     form {
+//         display: flex;
+//         margin: 0 auto;     
+//         flex-direction: column;
+//         // height: 200px;
+//         width: 400px;
+//         // .actions {
+//         //     input {
+//         //         font-size: 12pt;
+//         //         background-color: rgb(215, 224, 247);
+//         //         border: 2px solid black;
+//         //         border-radius: 5px;
+//         //         padding: 5px;
+//         //     }
+            
+//         // }
+//         .form-field {
+//             display: flex;
+//             margin: 10px 0px;
+//             input {
+//                 margin: 10px 0px;
+//                 border-radius: 5px;
+//                 font-size: 12pt;
+//                 height: 30px;
+//             }
+//             textarea {
+//                 margin: 10px 0px;
+//                 height: 100px;
+//                 border-radius: 5px;
+//                 font-size: 12pt;
+//             }
+//         }
+    
+//     }        
+// }
 

@@ -1,7 +1,16 @@
-<% @bookings.each do |booking| %>
-<p><%=booking.listing.title%></p>
-<p><%=booking.start_date%></p>
-<p><%=booking.end_date%></p>
-<%= link_to "Cancel Booking", "/listings/#{booking.listing_id}/bookings/#{booking.id}" , method: :delete, class: 'button'%> 
-<%end%>
+
+<div class="bookings-container">
+<h1>Your Bookings</h1>
+
+    <% @bookings.each do |booking| %>
+    <div class="booking-container">
+    <p><%= link_to booking.listing.title, booking.listing, class: 'booking-header' %></p>
+    <p>Pickup: <%=booking.start_date%> at <%=booking.start_time%>:00</p>
+    <p>Drop off: <%=booking.end_date%> at <%=booking.end_time%>:00</p>
+    <%= link_to "Cancel Booking", "/listings/#{booking.listing_id}/bookings/#{booking.id}" , method: :delete, class: 'button delete-button', :data => {:confirm => 'Are you sure?'}%>
+    </div>
+    <%end%>
+
+</div>
+
 
