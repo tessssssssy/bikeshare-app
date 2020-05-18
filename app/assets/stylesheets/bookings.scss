@@ -1,14 +1,14 @@
 // Place all the styles related to the Bookings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+//booking.new
 .content-container {
     display: flex;
-    width: 100%;
     align-items: flex-start;
     justify-content: center;
     margin-top: 80px;
-    .form-container {
-        // margin: 75px auto;
+    .form-container {       
         margin-left: 20px;
         width: 300px;
         a {
@@ -19,6 +19,7 @@
             margin: 0 auto;     
             flex-direction: column;
             height: 200px;
+            width: 100%;
             .actions {
                 input {
                     font-size: 12pt;
@@ -46,18 +47,29 @@
                 }
             }
         
-        }        
+        } 
+        .flash-message {
+            position: relative;
+            top: 100px;
+        }       
     }
     
 }
 
+//bookings.index
 .bookings-container {
     margin: 100px;
     .booking-container {
         margin-top: 50px;
         .booking-header {
+            font-weight: 300;
             font-size: 20pt;
         }
     }
     
 }
+
+.payment {
+    margin: 100px;
+}
+

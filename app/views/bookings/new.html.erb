@@ -2,7 +2,7 @@
     <%= render 'shared/calendar' %>
     <div class="form-container">
         <% if @listing.user_id == current_user.id %>
-            <h1>Mark unavailable</h1>
+            <h1>Mark unavailable dates</h1>
         <%else%>
             <h1>Make Booking</h1>
         <%end%>
@@ -32,11 +32,10 @@
                 <%= form.submit 'Submit', class: 'button blue-button'%>
             </div>
         <% end %>
+         <% flash.each do |type, msg| %>
+        <div class="flash-message">
+            <%= msg %>
+        </div>
+        <% end %>
     </div>
-
-    <% flash.each do |type, msg| %>
-    <div>
-        <%= msg %>
-    </div>
-    <% end %>
 </div>

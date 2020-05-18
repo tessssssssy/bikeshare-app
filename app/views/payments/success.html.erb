@@ -1,3 +1,10 @@
 
+<div class="payment-container">
+    <h1>Booking Confirmed</h1>
+    <p>Confirmation of booking for <%=@listing.title%></p>
+    <p>Pickup: <%=@booking.start_date%> at <%=@booking.start_time%>:00</p>
+    <p>Drop off: <%=@booking.end_date%> at <%=@booking.end_time%>:00</p>
+    <p>Contact owner: <%=@listing.user.email%></p>
+    <%= link_to 'Home', listings_path, class: 'button blue-button'%>
+</div>
 
-<h1>Booking Confirmed</h1>

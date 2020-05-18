@@ -6,13 +6,14 @@ class PaymentsController < ApplicationController
     def get_stripe_id
       p params
       @booking = Booking.find(params[:id])
+      @listing = Listing.find(@booking.listing_id)
         session_id = Stripe::Checkout::Session.create(
           payment_method_types: ['card'],
           customer_email: current_user.email,
           line_items: [{
-            name: 'booking',
+            name: @listing.title,
             description: 'a booking',
-            amount: 1000,
+            amount: @booking.calculate_cost * 10,
             currency: 'aud',
             quantity: 1,
           }],
@@ -29,6 +30,8 @@ class PaymentsController < ApplicationController
         render :json => {id: session_id, stripe_public_key: Rails.application.credentials.dig(:stripe, :public_key)}
       end
       def success
+        @booking = current_user.bookings.last
+        @listing = Listing.find(@booking.listing_id)
       end
       def webhook
         payment_id = params[:data][:object][:payment_intent]
