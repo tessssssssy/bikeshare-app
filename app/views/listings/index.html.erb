@@ -1,7 +1,8 @@
 
 <div class="outer-container">
+<div class="options-bar">
 <div class="search-bar">
-    <%= form_tag listings_path, method: 'get' do %>
+    <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
     <div class="search-field">
       
       <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
@@ -16,16 +17,23 @@
     </div>
     <%# <div class="search-field">
        <%= label_tag(:instant_pickup, "Instant pickup available") %>
-       <%# <%= check_box_tag(:instant_pickup, params[:instant_picku]) %> 
+       <%# <%= check_box_tag(:instant_pickup, params[:instant_pickup]) %> 
     <%# </div> %> 
         
       <%= submit_tag "Search", name: nil, class: 'button', id: 'search-button' %>
     <%end%>
-     <%= form_tag listings_path, method: 'get' do %>
-        <%= radio_button :sort_method, params[:sort_method], 'Most ratings', :checked => true %> 
+    </div>
+
+     <%= form_tag listings_path, method: 'get', class: 'sort-form' do %>
+     <p>Sort by:</p>
+     <div class="sort-option">
+        <%= radio_button :sort_method, params[:sort_method], 1, :checked => true %> 
         <%= label :sort_method, 'Most ratings' %>
-        <%= radio_button :sort_method, params[:sort_method], 'Highest rated' %>
-        <%= label :sort_method, 'Highest rated' %>
+    </div>
+    <div class="sort-option">
+        <%= radio_button :sort_method, params[:sort_method], 0 %>
+        <%= label :sort_method, 'Highest rated' %>   
+    </div>
         <%= submit_tag "sort", name: nil, class: 'button', id: 'sort-button' %>
       <%end%>
 </div>
@@ -39,7 +47,7 @@
     <div class="listings-container">
     <div class="listings-header">
         <%if params[:search] %>
-            <h2>Listings in <%=params[:search]%></h2>
+            <h2>Listings for <%=params[:search] != "" ? params[:search] : "Everywhere"%></h2>
         <%end%>
     </div>
         <% @listings.each do |listing| %>

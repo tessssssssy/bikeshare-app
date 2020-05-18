@@ -1,6 +1,8 @@
 require 'booking.rb'
+require 'shared_methods.rb'
 
 class Listing < ApplicationRecord
+  include SharedMethods
   validates :title, :description, presence: true
   belongs_to :user
   belongs_to :location
@@ -38,8 +40,8 @@ class Listing < ApplicationRecord
   def check_availability(start_date, end_date)
     bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
-        if booking.start_date < start_date && 
-           booking.end_date > end_date
+        if date_to_integer(booking.start_date) < date_to_integer(start_date) && 
+           date_to_integer(booking.end_date) > date_to_integer(end_date)
             return false
         end
     end

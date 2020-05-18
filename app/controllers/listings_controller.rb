@@ -5,10 +5,12 @@ class ListingsController < ApplicationController
     before_action :set_user_listing, only: [:edit]
     def index
         @listings = []
-        locations = Location.search_city(params[:search])
-        if params[:search]
+        
+        if params[:search] && params[:search] != ''
+          locations = Location.search_city(params[:search])
           coordinates = Geocoder.search(params[:search]).first.coordinates
-          p "****************#{coordinates}*******************"
+        else
+          locations = Location.all
         end
         Listing.all.each do |listing|
           locations.each do |location|
@@ -30,7 +32,7 @@ class ListingsController < ApplicationController
         end
         # sort listings by most reviews
         # if listings.sort by most reviewed
-        if params[:sort_method] == ['Highest rated']
+        if params[:sort_method] == ['0']
           @listings = @listings.sort_by { |listing| listing.average_rating }.reverse
         else
           @listings = @listings.sort_by { |listing| listing.reviews.length }.reverse     
@@ -67,14 +69,10 @@ class ListingsController < ApplicationController
     end
 
     def edit
-      # if current_user.id != @listing.user_id
-      #   redirect_to listings_path
-      # end
       @location = Location.find(@listing.location_id)
     end
 
     def update 
-      # needs conditional for if location has not changed - check if two locations are identical
       p params
       @location = Location.find(@listing.location_id)
       new_location = Location.create(location_params)

@@ -26,12 +26,29 @@
                 <%end%>
             <%end%>
         </div>
+        <div class="calendar-keys">
+            <div class="calendar-key">
+                <div class="box" id="available-key"></div>
+                <p>Available all day</p>
+            </div>
+            <div class="calendar-key">
+                <div class="box" id="partial-key"></div>
+                <p>Some times available</p>
+            </div>
+            <div class="calendar-key">
+                <div class="box" id="booked-key"></div>
+                <p>Not available</p>
+            </div>
+        </div>
         </div>
     </div>
     <div class="listing-container">
         <h1 class="listing-title"><%=@listing.title%></h1>
         <%= image_tag @listing.image if @listing.image.attached? %>
         <p><%=@listing.description%></p>
+        <p>Category: <%=@listing.category%><p>
+        <p>Hourly Rate: $<%=@listing.hourly_rate%></p>
+        <p>Daily Rate: $<%=@listing.daily_rate%></p>
         <%if @listing.instant_pickup %>
             <p>Instant Pickup Available</p>
         <%end%>
@@ -43,25 +60,27 @@
         <h3>Leave a review</h3>
         <%= form_for [@listing, @review] do |form| %>
         <div class="form-field">
-            <%= form.text_area :body %> 
+            <%= form.text_area :body, class: 'review-body'%> 
         </div>
         <div class="form-field">
             <%= form.label :rating %>
-            <%= form.select :rating, ['1','2','3','4','5']%>
+            <%= form.select :rating, ['5','4','3','2','1']%>
         </div>
         <div class='actions'>
             <%= form.submit 'Submit', class: 'button'%>
         </div>
         <% end %>
-        <% @listing.reviews.each do |review| %>
-        <div class="review-container">
-        <p><%=review.body%></p>
-        <p>Rating: <%=review.rating%></p>
-        <%if current_user.id == review.user_id %>
-        <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete, class: 'button' %>
-        <%end%>
-        </div>
+        <div class="reviews-container">
+            <h3>Reviews for <%=@listing.title%></h3>
+            <% @listing.reviews.each do |review| %>
+            <div class="review-container">
+            <p><%=review.body%></p>
+            <p>Rating: <%=review.rating%></p>
+            <%if current_user.id == review.user_id %>
+            <%= link_to 'Delete', listing_review_path(@listing, review), method: :delete, class: 'button' %>
+            <%end%>   
         <% end %>
+        </div>
     </div>
 </div>
 

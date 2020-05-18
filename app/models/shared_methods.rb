@@ -3,3 +3,4 @@ module SharedMethods
         date.to_s.split('-').join('').to_i
     end
 end
+

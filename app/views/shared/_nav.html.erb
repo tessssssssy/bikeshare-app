@@ -1,14 +1,21 @@
 <nav>
-    <%= link_to "Home", listings_path %>
-
+    <div class="nav-left">
+    <%= link_to "BikeFinder", listings_path, id: 'nav-logo' %>
+    <% if !user_signed_in? %>
+    </div>
+    <%end%>
     <% if user_signed_in? %>
         <%= link_to "Add Listing", new_listing_path %>
         <%= link_to "Manage Listings", '/manage' %>
         <%= link_to "View my bookings", bookings_path %>
+    </div>
+    <div class="nav-right">
         <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-                
+    </div>           
     <% else %>
+    <div class="nav-right">
         <%= link_to "Login", new_user_session_path %>
         <%= link_to "Signup", new_user_registration_path %>
+    </div>
     <% end %>
 </nav>

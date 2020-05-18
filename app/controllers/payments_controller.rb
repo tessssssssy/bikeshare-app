@@ -36,9 +36,10 @@ class PaymentsController < ApplicationController
         # user_id = params[:data][:object][:metadata][:user_id]
         payment = Stripe::PaymentIntent.retrieve(payment_id)
         booking_id = payment.metadata.booking_id
+        p booking_id
         user_id = payment.metadata.user_id
         booking = Booking.find(booking_id)
-        booking.update(confirmed: true)
+        booking.confirmed = true
         booking.save
       end
 end
