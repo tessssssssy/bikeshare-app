@@ -4,8 +4,7 @@ class ListingsController < ApplicationController
     before_action :find_listing ,only: [:show, :edit, :update, :destroy]
     before_action :set_user_listing, only: [:edit]
     def index
-        @listings = []
-        
+        @listings = [] 
         if params[:search] && params[:search] != ''
           locations = Location.search_city(params[:search])
           coordinates = Geocoder.search(params[:search]).first.coordinates
@@ -37,7 +36,6 @@ class ListingsController < ApplicationController
         else
           @listings = @listings.sort_by { |listing| listing.reviews.length }.reverse     
         end
-        p coordinates
       if params[:type] == "json"
         data = @listings.map do |listing|
           [listing.location.latitude, listing.location.longitude]

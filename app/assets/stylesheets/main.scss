@@ -1,3 +1,6 @@
+@import 'listings';
+@import 'payments';
+@import 'pages';
 
 body {
     font-family: 'Raleway', sans-serif;
@@ -57,5 +60,3 @@ footer {
     cursor: pointer;
 }
 
-@import 'listings';
-@import 'payments';

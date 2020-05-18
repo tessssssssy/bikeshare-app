@@ -1,8 +1,9 @@
-<div class="page-container">
-    <div class="search-bar">
-        <%= form_tag listings_path, method: 'get' do %>
+<div class="landing-container">
+<div class="landing-content">
+    <h1 class="landing-header">BikeFinder</h1>
+    <h3 class="landing-subhead">Where do you want to ride?</h3>
+        <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
         <div class="search-field">
-        
         <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
         </div>
         <div class="search-field">
