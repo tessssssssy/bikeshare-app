@@ -4,27 +4,26 @@ class ListingsController < ApplicationController
     before_action :find_listing ,only: [:show, :edit, :update, :destroy]
     before_action :set_user_listing, only: [:edit]
     def index
-      @listings = Listing.all
-        # @listings = [] 
-        # if params[:search] && params[:search] != ''
-        #   locations = Location.search_city(params[:search])
-        #   coordinates = Geocoder.coordinates(params[:search])
-        # else
-        #   locations = Location.all
-        # end
-        # Listing.all.each do |listing|
-        #   locations.each do |location|
-        #     if listing.location_id == location.id
-        #       @listings << listing
-        #     end
-        #   end
-        # end
-        
-        # if params[:start_date] && params[:end_date]
-        #   if params[:start_date] != "" && params[:end_date] != ""
-        #     @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
-        #   end  
-        # end  
+        @listings = [] 
+        if params[:city] && params[:city] != ''
+          locations = Location.search_city(params[:city])         
+          coordinates = Geocoder.coordinates(params[:city])
+        else
+          locations = Location.all
+        end
+        p locations
+        Listing.all.each do |listing|
+          locations.each do |location|
+            if listing.location_id == location.id
+              @listings << listing
+            end
+          end
+        end  
+        if params[:start_date] && params[:end_date]
+          if params[:start_date] != "" && params[:end_date] != ""
+            @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
+          end  
+        end  
         if params[:sort_method] == "0"
           @listings = @listings.sort_by { |listing| listing.average_rating }.reverse
         else
@@ -40,8 +39,7 @@ class ListingsController < ApplicationController
 
     def search
       location = Geocoder.search(params[:search])[0].data["geometry"]["location"]
-      p "**************************#{location}"
-      @listings = Listing.all
+      @listings = Listing.all 
       data = @listings.map do |listing|
         [listing.location.latitude, listing.location.longitude]
       end
@@ -62,8 +60,8 @@ class ListingsController < ApplicationController
 
     def create
       location = Location.new(location_params)
-      location.latitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[0]
-      location.longitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[1]
+      # location.latitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[0]
+      # location.longitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[1]
       location.save
       @listing = current_user.listings.create(listing_params.merge(location_id: location.id))
       if @listing.save
@@ -80,10 +78,10 @@ class ListingsController < ApplicationController
     def update 
       @location = Location.find(@listing.location_id)
       new_location = Location.new(location_params)
-      new_location.latitude = Geocoder.coordinates(new_location.address, :params => {:region => new_location.country})[0]
-      new_location.longitude = Geocoder.coordinates(new_location.address, :params => {:region => new_location.country})[1]
-      new_location.save
-      @listing.location_id = new_location.id
+      if @location.full_address != new_location.full_address
+        new_location.save
+        @listing.location_id = new_location.id
+      end           
       if @listing.update(listing_params)     
         redirect_to @listing
       else

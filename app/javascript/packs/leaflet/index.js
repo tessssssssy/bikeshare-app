@@ -22,18 +22,16 @@ import { tileLayer } from './tileLayer'
 const renderMap = async (search) => {
   const url = search ? `/listings/map/${search}` : `/listings?type=json`
   const response = await fetch(url)
-  console.log(response)
   const { data, center } = await response.json()
-  console.log(data)
-  console.log(center)
   const map = await tileLayer(center)
   const markers = data.map((location) => {
     return L.marker([location[0], location[1]], {icon: icon })
   })
   L.featureGroup(markers).addTo(map)
   submit.disabled = false
-
 }
+
+
 const search = document.querySelector("#search-form")
 const submit = document.querySelector("#search-button")
 
@@ -47,8 +45,6 @@ search.addEventListener('submit', async (e) => {
   const value = e.target.elements[0].value
   renderMap(value)
 })
-
-
 
 renderMap()
 

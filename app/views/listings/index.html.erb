@@ -1,11 +1,19 @@
 
 <div class="outer-container">
 <div class="options-bar">
+<div class="map-search">
+<%= form_tag listings_path, method: 'get', id: "search-form", class: 'map-form' do %>
+    <div class="search-field">     
+      <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
+    </div>
+    <%= submit_tag "Search", name: nil, class: 'button blue-button', id: 'search-button' %>
+ <%end%>
+ </div>
 <div class="search-bar">
-    <%= form_tag listings_path, method: 'get', class: 'search-form', id: "search-form" do %>
+    <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
     <div class="search-field">
       
-      <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
+      <%= text_field_tag :city, params[:city], placeholder: "Enter city" %>
     </div>
     <div class="search-field">
       
@@ -20,7 +28,7 @@
        <%# <%= check_box_tag(:instant_pickup, params[:instant_pickup]) %> 
     <%# </div> %> 
         
-      <%= submit_tag "Search", name: nil, class: 'button blue-button', id: 'search-button' %>
+      <%= submit_tag "Search", name: nil, class: 'button blue-button' %>
     <%end%>
     </div>
     <form action="/listings" method="get" class="sort-form">
