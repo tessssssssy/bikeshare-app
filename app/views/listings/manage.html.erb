@@ -4,7 +4,7 @@
 <div class="manage-listings-container">
     <% @listings.each do |listing| %>
      <div class="manage-listing-container">
-    <p><%=link_to listing.title, listing %></p>
+    <h2><%=link_to listing.title, listing %></h2>
     <%= image_tag listing.image if listing.image.attached? %>
     <p><%=listing.bookings.length%> bookings</p>
         <div class="links-container">

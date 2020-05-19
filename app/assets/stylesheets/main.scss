@@ -33,13 +33,13 @@ nav {
         color: black;
     }
     a:hover {
-        color: darkturquoise;
+        color: #0bbaae;
         transition: 0.5s;
     }
     #nav-logo {
         font-size: 24pt;
         font-family: 'Dancing Script', cursive;
-        color: darkcyan;
+        color: #0bbaae;
     }
 }
 
@@ -62,10 +62,10 @@ footer {
     background-color: dodgerblue;
 }
 .edit-button {
-    background-color: darkcyan;
+    background-color:#0bbaae;
 }
 .delete-button {
-    background-color: coral;
+    background-color: #ed515e;
 }
 
 .button:hover {

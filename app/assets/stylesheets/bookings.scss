@@ -58,12 +58,16 @@
 
 //bookings.index
 .bookings-container {
+    h1 {
+        font-weight: 300;
+    }
     margin: 100px;
     .booking-container {
         margin-top: 50px;
         .booking-header {
             font-weight: 300;
             font-size: 20pt;
+            color: #5b7506;
         }
     }
     

@@ -8,11 +8,11 @@
         </div>
         <div class="search-field">
         
-        <%= date_field_tag :start_date, params[:start_date], placeholder: "From" %>
+        <%= date_field_tag :start_date, params[:start_date], placeholder: "From", class: 'date-input' %>
         </div>
         <div class="search-field">
         
-        <%= date_field_tag :end_date, params[:end_date], placeholder: "To" %>
+        <%= date_field_tag :end_date, params[:end_date], placeholder: "To", class: 'date-input' %>
         </div>
         <%# <div class="search-field">
         <%= label_tag(:instant_pickup, "Instant pickup available") %>

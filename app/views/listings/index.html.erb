@@ -4,7 +4,7 @@
 <div class="map-search">
 <%= form_tag listings_path, method: 'get', id: "search-form", class: 'map-form' do %>
     <div class="search-field">     
-      <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
+      <%= text_field_tag :search, params[:search], placeholder: "Enter city", id: "search-field" %>
     </div>
     <%= submit_tag "Search", name: nil, class: 'button blue-button', id: 'search-button' %>
  <%end%>
@@ -17,11 +17,11 @@
     </div>
     <div class="search-field">
       
-      <%= date_field_tag :start_date, params[:start_date], placeholder: "From" %>
+      <%= date_field_tag :start_date, params[:start_date], placeholder: "From", class: 'date-input' %>
     </div>
     <div class="search-field">
        
-       <%= date_field_tag :end_date, params[:end_date], placeholder: "To" %>
+       <%= date_field_tag :end_date, params[:end_date], placeholder: "To", class: 'date-input'%>
     </div>
     <%# <div class="search-field">
        <%= label_tag(:instant_pickup, "Instant pickup available") %>
@@ -32,10 +32,14 @@
     <%end%>
     </div>
     <form action="/listings" method="get" class="sort-form">
-    <label for="sort_method">Highest Rated</label>
-    <input type="radio" name="sort_method"value="0" checked/>
-    <label for="sort_method">Most Ratings</label>
-    <input type="radio" name="sort_method" value="1"/>
+    <div class="sort-option">       
+        <input type="radio" name="sort_method"value="0" checked/>
+        <label for="sort_method">Highest Rated</label>
+    </div>
+    <div class="sort-option">      
+        <input type="radio" name="sort_method" value="1"/>
+        <label for="sort_method">Most Ratings</label>
+    </div>
     <input type="submit" value="Sort" class="button edit-button">
     </form>
     

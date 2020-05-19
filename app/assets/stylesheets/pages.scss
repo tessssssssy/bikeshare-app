@@ -3,10 +3,11 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .landing-container {
-    background-image: url(asset_path('IMG_1805.jpg'));
+    background-image: url(asset_path('QOM_7226.jpg'));
     height: 100vh;
     width: 100%;
     position: absolute;
+    background-size: cover;
     .landing-content {
         height: 100%;
         display: flex;
@@ -15,7 +16,7 @@
         justify-content: center;
         .landing-header {
             font-family: 'Dancing Script', cursive;
-            color: darkcyan; 
+            color: black; 
             font-size: 90pt;
             margin-bottom: 0px;
         }
