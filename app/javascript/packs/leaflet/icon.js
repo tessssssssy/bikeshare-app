@@ -4,9 +4,10 @@ import icon1 from "leaflet/dist/images/marker-icon.png"
 import shadow from "leaflet/dist/images/marker-shadow.png"
 
 export const icon = L.icon({
-  iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Bicycle.svg/1200px-Bicycle.svg.png',
+  iconUrl:  icon1,  
   shadowUrl: shadow,
-  iconSize: [36,24],
+  iconSize: [24,36],
   iconAnchor: [12,36]
 })
+
 

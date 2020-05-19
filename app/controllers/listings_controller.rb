@@ -4,33 +4,27 @@ class ListingsController < ApplicationController
     before_action :find_listing ,only: [:show, :edit, :update, :destroy]
     before_action :set_user_listing, only: [:edit]
     def index
-        @listings = [] 
-        if params[:search] && params[:search] != ''
-          locations = Location.search_city(params[:search])
-          coordinates = Geocoder.search(params[:search]).first.coordinates
-        else
-          locations = Location.all
-        end
-        Listing.all.each do |listing|
-          locations.each do |location|
-            if listing.location_id == location.id
-              @listings << listing
-            end
-          end
-        end
-        p "******#{@listings}********"
-        # show only listings available for these dates
-        if params[:start_date] && params[:end_date]
-          if params[:start_date] != "" && params[:end_date] != ""
-            @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
-          end  
-        end  
-        # show only listings with instant pickup available
-        if params[:instant_pickup]
-          @listings = @listings.filter { |listing| listing.instant_pickup }
-        end
-        # sort listings by most reviews
-        # if listings.sort by most reviewed
+      @listings = Listing.all
+        # @listings = [] 
+        # if params[:search] && params[:search] != ''
+        #   locations = Location.search_city(params[:search])
+        #   coordinates = Geocoder.coordinates(params[:search])
+        # else
+        #   locations = Location.all
+        # end
+        # Listing.all.each do |listing|
+        #   locations.each do |location|
+        #     if listing.location_id == location.id
+        #       @listings << listing
+        #     end
+        #   end
+        # end
+        
+        # if params[:start_date] && params[:end_date]
+        #   if params[:start_date] != "" && params[:end_date] != ""
+        #     @listings = @listings.filter { |listing| listing.check_availability(params[:start_date], params[:end_date]) } 
+        #   end  
+        # end  
         if params[:sort_method] == "0"
           @listings = @listings.sort_by { |listing| listing.average_rating }.reverse
         else
@@ -40,9 +34,19 @@ class ListingsController < ApplicationController
         data = @listings.map do |listing|
           [listing.location.latitude, listing.location.longitude]
         end
-        render json: { data: data, center: coordinates }
+        render json: { data: data, center: [data[0][0], data[0][1]] }
       end    
     end
+
+    def search
+      location = Geocoder.search(params[:search])[0].data["geometry"]["location"]
+      p "**************************#{location}"
+      @listings = Listing.all
+      data = @listings.map do |listing|
+        [listing.location.latitude, listing.location.longitude]
+      end
+      render json: {data: data, center: [location["lat"], location["lng"]]}  
+    end 
 
     def manage
       @listings = current_user.listings

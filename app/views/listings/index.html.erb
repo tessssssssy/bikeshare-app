@@ -2,7 +2,7 @@
 <div class="outer-container">
 <div class="options-bar">
 <div class="search-bar">
-    <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
+    <%= form_tag listings_path, method: 'get', class: 'search-form', id: "search-form" do %>
     <div class="search-field">
       
       <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>

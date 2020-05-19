@@ -102,6 +102,7 @@ class Listing < ApplicationRecord
     return "#{date} : available from #{start_time} to #{end_time}"
   end
   def average_rating
+    return 0 if self.reviews.length == 0
     sum = 0
     self.reviews.each do |review|
       sum += review.rating
