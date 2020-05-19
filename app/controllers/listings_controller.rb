@@ -57,7 +57,10 @@ class ListingsController < ApplicationController
     end
 
     def create
-      location = Location.create(location_params)
+      location = Location.new(location_params)
+      location.latitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[0]
+      location.longitude = Geocoder.coordinates(location.address, :params => {:region => location.country})[1]
+      location.save
       @listing = current_user.listings.create(listing_params.merge(location_id: location.id))
       if @listing.save
         redirect_to @listing
@@ -71,9 +74,11 @@ class ListingsController < ApplicationController
     end
 
     def update 
-      p params
       @location = Location.find(@listing.location_id)
-      new_location = Location.create(location_params)
+      new_location = Location.new(location_params)
+      new_location.latitude = Geocoder.coordinates(new_location.address, :params => {:region => new_location.country})[0]
+      new_location.longitude = Geocoder.coordinates(new_location.address, :params => {:region => new_location.country})[1]
+      new_location.save
       @listing.location_id = new_location.id
       if @listing.update(listing_params)     
         redirect_to @listing
