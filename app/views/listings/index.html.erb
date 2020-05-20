@@ -4,7 +4,7 @@
 <div class="map-search">
 <%= form_tag listings_path, method: 'get', id: "search-form", class: 'map-form' do %>
     <div class="search-field">     
-      <%= text_field_tag :search, params[:search], placeholder: "Enter city", id: "search-field" %>
+      <%= text_field_tag :search, params[:search], id: "map-search-field" %>
     </div>
     <%= submit_tag "Search", name: nil, class: 'button blue-button', id: 'search-button' %>
  <%end%>
@@ -13,7 +13,7 @@
     <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
     <div class="search-field">
       
-      <%= text_field_tag :city, params[:city], placeholder: "Enter city" %>
+      <%= text_field_tag :city, params[:city], placeholder: "Enter city", id: "search-field" %>
     </div>
     <div class="search-field">
       

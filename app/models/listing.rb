@@ -3,30 +3,31 @@ require 'shared_methods.rb'
 
 class Listing < ApplicationRecord
   include SharedMethods
-  validates :title, :description, presence: true
+  validates :title, :description, :category, :daily_rate, :hourly_rate, presence: true
   belongs_to :user
   belongs_to :location
   has_many :bookings, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_one_attached :image
-  def self.search(search)
-    if search
-      location = Location.find_by(city: search)
-      @listings = Listing.includes(:tags).where('location.id' => image_tag.id).all
-      # self.where(location_id: location)
-    else
-      @listings = Listing.all
-    end      
-  end
-  
-  def self.search_category(search)
-    if search
-      self.where(category: category)
-    else
-      @listings = Listing.all
-    end      
-  end
 
+  # def self.search(search)
+  #   if search
+  #     location = Location.find_by(city: search)
+  #     @listings = Listing.includes(:tags).where('location.id' => image_tag.id).all
+  #   else
+  #     @listings = Listing.all
+  #   end      
+  # end
+  
+  # def self.search_category(search)
+  #   if search
+  #     self.where(category: category)
+  #   else
+  #     @listings = Listing.all
+  #   end      
+  # end
+
+  # checks if a particular date is available for a listing
   def date_available?(date)
     bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
@@ -37,6 +38,7 @@ class Listing < ApplicationRecord
     return true
   end
 
+  # checks availability for a listing within a range of dates
   def check_availability(start_date, end_date)
     bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
@@ -47,7 +49,7 @@ class Listing < ApplicationRecord
     end
     return true
   end
-
+  # checks if a particular time of day is available 
   def time_available?(time, date)
     bookings = Booking.where(listing_id: self.id)
     bookings.each do |booking|
@@ -69,7 +71,7 @@ class Listing < ApplicationRecord
     end
   return true
   end
-
+  # returns true if a date has some times available but is not fully available
   def partial_availability(date)
     bookings = Booking.where(listing_id: self.id)
     if !date_available?(date)
@@ -83,6 +85,7 @@ class Listing < ApplicationRecord
     return false
   end
 
+  # finds times available for a particular date
   def get_available_times(date)
     bookings = Booking.where(listing_id: self.id)
     start_time = 0
@@ -101,6 +104,8 @@ class Listing < ApplicationRecord
     end
     return "#{date} : available from #{start_time} to #{end_time}"
   end
+  
+  # gets the average rating for a listing based on its reviews
   def average_rating
     return 0 if self.reviews.length == 0
     sum = 0

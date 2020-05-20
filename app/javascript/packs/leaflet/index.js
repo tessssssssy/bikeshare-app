@@ -34,18 +34,19 @@ const renderMap = async (search) => {
 
 const search = document.querySelector("#search-form")
 const submit = document.querySelector("#search-button")
-const field = document.querySelector("#search-field")
+const mapField = document.querySelector("#map-search-field")
+const searchField = document.querySelector("#search-field")
 
 search.addEventListener('submit', async (e) => {
-  e.preventDefault()
-  
+  e.preventDefault()  
   console.log('Hello')
+  searchField.value = mapField.value
   map.remove()
   document.querySelector(".map-container").innerHTML = `<div style="height: 700px; width: 500px;" id="map"></div>`
   const value = e.target.elements[0].value
   renderMap(value)
 })
 
-renderMap(field.value)
-console.log(field.value)
+renderMap(mapField.value)
+//console.log(field.value)
 

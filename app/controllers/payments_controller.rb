@@ -4,7 +4,6 @@ class PaymentsController < ApplicationController
       @booking = Booking.find(params[:id])
     end
     def get_stripe_id
-      p params
       @booking = Booking.find(params[:id])
       @listing = Listing.find(@booking.listing_id)
         session_id = Stripe::Checkout::Session.create(
@@ -33,13 +32,12 @@ class PaymentsController < ApplicationController
         @booking = current_user.bookings.last
         @listing = Listing.find(@booking.listing_id)
       end
+
+      #use a webhook to update a booking to confirmed once the deposit is paid
       def webhook
         payment_id = params[:data][:object][:payment_intent]
-        # booking_id = params[:data][:object][:metadata][:booking_id]
-        # user_id = params[:data][:object][:metadata][:user_id]
         payment = Stripe::PaymentIntent.retrieve(payment_id)
         booking_id = payment.metadata.booking_id
-        p booking_id
         user_id = payment.metadata.user_id
         booking = Booking.find(booking_id)
         booking.confirmed = true

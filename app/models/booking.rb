@@ -5,8 +5,8 @@ class Booking < ApplicationRecord
   include SharedMethods
   belongs_to :user
   belongs_to :listing
-  # calculating cost of a booking less than a full day
-  # or calculate the cost of extra hours on a multi day booking
+  
+  # calculates the cost for extra hours - or for bookings that are less than a day
   def hours_cost
     listing = Listing.find(self.listing_id)
     hours = self.end_time - self.start_time
@@ -18,6 +18,7 @@ class Booking < ApplicationRecord
     end
   end
 
+  # calculates the cost of each day based on listing daily rate
   def days_cost
     listing = Listing.find(self.listing_id)
     daily_rate = listing.daily_rate
@@ -25,6 +26,7 @@ class Booking < ApplicationRecord
     return days * daily_rate
   end
 
+  # gets the total cost of booking by adding the cost of the total days and any extra hours
   def calculate_cost
     listing = Listing.find(self.listing_id)
     if self.start_date == self.end_date

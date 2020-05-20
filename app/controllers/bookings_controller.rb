@@ -1,13 +1,14 @@
 
 class BookingsController < ApplicationController
     before_action :authenticate_user!
+    before_action :find_booking, only: [:show, :edit, :update, :destroy]
+
+    # retrieves all the current users upcoming bookings
     def index
        @bookings = current_user.bookings.where(date_to_integer(:end_date) >= date_to_integer(Date.today)).sort_by { |booking| booking.start_date }
-    #    @pastbookings = current_user.bookings.where(date_to_integer(:end_date) < date_to_integer(Date.today))
     end
 
     def show
-        @booking = Booking.find(params[:id])
         @listing = Listing.find(@booking.listing_id)
     end
 
@@ -18,24 +19,21 @@ class BookingsController < ApplicationController
 
     def create
         @booking = Booking.new
-        #     user_id: current_user.id,
-        #     listing_id: params[:listing_id],
-        #     start_date: params[:start_date],
-        #     end_date: params[:end_date],
-        #     start_time: params[:start_time],
-        #     end_time: params[:end_time]
-        # )
+        # for some reason itwould not let me create a booking using booking_params and also add the listing_id, so I had to manually add each attribute
         @booking.user_id = current_user.id
         @booking.listing_id = params[:listing_id]
         @booking.start_date = params[:booking][:start_date]
         @booking.end_date = params[:booking][:end_date]
         @booking.start_time = params[:booking][:start_time]
         @booking.end_time = params[:booking][:end_time]
-        # @booking = Booking.create(booking_params.merge(user_id: current_user.id))
+        
+        # automatically sets confirmed to true if a listing is booked by its own user
+        # if it's a different user they have to pay a deposit before it is confirmed
         @listing = Listing.find(params[:listing_id])
         if current_user.id == @listing.user_id
             @booking.confirmed = true
         end
+        # lots of conditionals for invaild date inputs  or unavailable dates and times with flash messages
         if @booking.start_date == nil || @booking.end_date == nil
             flash[:notice] = "Please select a start date and an end date"
             redirect_to "/listings/#{@listing.id}/bookings/new"
@@ -50,7 +48,6 @@ class BookingsController < ApplicationController
             redirect_to "/listings/#{@listing.id}/bookings/new"
         elsif !@listing.time_available?(@booking.start_time, @booking.start_date) || !@listing.time_available?(@booking.end_time, @booking.end_date)
             flash[:notice] = "Available Times: #{@listing.get_available_times(@booking.start_date)}, #{@listing.get_available_times(@booking.end_date)}"
-            # flash[:notice] = @listing.get_available_times(@booking.end_date)
             redirect_to "/listings/#{@listing.id}/bookings/new"
         else
             if @booking.save
@@ -64,9 +61,8 @@ class BookingsController < ApplicationController
             end
         end
     end
-
+    # delete a booking 
     def destroy
-        @booking = Booking.find(params[:id])
         @booking.destroy
         redirect_to bookings_path
     end
@@ -77,6 +73,10 @@ class BookingsController < ApplicationController
     end
     def date_to_integer(date)
         date.to_s.split('-').join('').to_i
+    end
+
+    def find_booking
+        @booking = Booking.find(params[:id])
     end
 end
 

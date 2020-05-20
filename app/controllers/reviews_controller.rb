@@ -3,32 +3,32 @@ class ReviewsController < ApplicationController
     def index
         @reviews = Review.all
     end
+
+    # new review form
     def new
         @review = Review.new
     end
+
+    # create a new review
     def create
-        p params
         @listing = Listing.find(params[:listing_id])
         @review = @listing.reviews.create(review_params.merge(user_id: current_user.id))
         if @review.save
             redirect_to @listing
         end
-        # redirect_to @listing
     end
-
-    def edit
-    end
-    def update
-    end
+    # delete a review
     def destroy
         @listing = Listing.find(params[:listing_id])
         @review = @listing.reviews.find(params[:id])
         @review.destroy
         redirect_to @listing
     end
+
     private
+    # permit params for review
     def review_params
-      params.require(:review).permit(:body, :rating )
+      params.require(:review).permit(:body, :rating)
     end
 end
 
