@@ -12,7 +12,7 @@ The benefits of cycling are numerous. It is a great form of exercise, a convenie
 
 Link to app
 ---
-
+https://damp-plateau-00756.herokuapp.com/
 
 Github Repository
 ---
@@ -129,6 +129,57 @@ Discuss the database relations to be implemented in your application
 ---
 
 My database consists of five tables. The listing table is the most central structure in the app. It represents a bicycle that can be uploaded by a user (the owner), and then booked out by other users and also reviewed by other users. A listing can have many bookings and reviews and it belongs to one user. It also references a location. I initially had the location as a column on the listing model itself, but decided to refactor it into it's own table to implement database normalization, as some locations can have multiple listings (such as a user who owns multiple bikes). A booking belongs to a user and a listing, and a listing can have many bookings. A review belongs to a user and belongs to a listing. 
+
+Database schema design
+---
+```
+Table user {
+  id bigint [pk]
+  name varchar
+  email varchar
+  password varchar
+}
+
+Table listing {
+  id bigint [pk]
+  title varchar
+  description text
+  category varchar
+  hourly_rate int
+  daily_rate int
+  instant_pickup boolean
+  user_id int  [ref: > user.id]
+}
+
+Table booking {
+  id bigint [pk]
+  start_time timestamp
+  end_time timestamp
+  confirmed boolean
+  user_id int  [ref: > user.id]
+  listing_id int [ref: > listing.id]
+}
+
+Table location {
+  id bigint [pk]
+  address varchar
+  post_code varchar
+  city varchar
+  country varchar
+  latitude float
+  longitude float
+  listing_id int [ref: > listing.id]
+}
+
+
+Table review {
+  id bigint [pk]
+  body text
+  rating int
+  listing_id int [ref: > listing.id]
+  user_id int  [ref: > user.id]
+}
+ ```
 
 Project Management and tracking tasks
 --- 
