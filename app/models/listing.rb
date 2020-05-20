@@ -102,7 +102,7 @@ class Listing < ApplicationRecord
         end
       end
     end
-    return "#{date} : available from #{start_time} to #{end_time}"
+    return "#{date} : available from #{start_time}:00 to #{end_time}:00"
   end
   
   # gets the average rating for a listing based on its reviews
