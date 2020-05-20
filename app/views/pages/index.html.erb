@@ -4,7 +4,7 @@
     <h3 class="landing-subhead">Where do you want to ride?</h3>
         <%= form_tag listings_path, method: 'get', class: 'search-form' do %>
         <div class="search-field">
-        <%= text_field_tag :search, params[:search], placeholder: "Enter city" %>
+        <%= text_field_tag :city, params[:city], placeholder: "Enter city" %>
         </div>
         <div class="search-field">
         

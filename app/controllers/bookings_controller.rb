@@ -8,15 +8,18 @@ class BookingsController < ApplicationController
        @bookings = current_user.bookings.where(date_to_integer(:end_date) >= date_to_integer(Date.today)).sort_by { |booking| booking.start_date }
     end
 
+    # confrimation page for the booking, directs user to stripe payment
     def show
         @listing = Listing.find(@booking.listing_id)
     end
 
+    # renders form for new booking
     def new
         @listing = Listing.find(params[:listing_id])
         @booking = Booking.new
     end
 
+    # create a booking
     def create
         @booking = Booking.new
         # for some reason itwould not let me create a booking using booking_params and also add the listing_id, so I had to manually add each attribute
@@ -61,6 +64,7 @@ class BookingsController < ApplicationController
             end
         end
     end
+    
     # delete a booking 
     def destroy
         @booking.destroy

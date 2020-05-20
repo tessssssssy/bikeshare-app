@@ -34,6 +34,8 @@ const renderMap = async (search) => {
 
 const search = document.querySelector("#search-form")
 const submit = document.querySelector("#search-button")
+const mapField = document.querySelector("#map-search-field")
+const searchField = document.querySelector("#search-field")
 
 search.addEventListener('submit', async (e) => {
   e.preventDefault()  
@@ -44,6 +46,6 @@ search.addEventListener('submit', async (e) => {
   renderMap(value)
 })
 
-renderMap()
+renderMap(searchField.value)
 //console.log(field.value)
 
