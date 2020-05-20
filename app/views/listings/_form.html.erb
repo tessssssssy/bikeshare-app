@@ -41,8 +41,12 @@
     </div>
 <%end%>
 <div class="form-field">
+ 
     <%= form.label :instant_pickup %>
-     <%= form.check_box :instant_pickup, { checked: false }, 'true', 'false' %> 
+     <%= form.check_box :instant_pickup, { checked: false }, 'true', 'false' %>
+     <p>Bicycles available for instant pickup must be placed in an accessible location for 
+    the user to access. It can be locked with a suitable combination lock which should be sent to the
+    user up booking confirmation</p> 
  </div>  
 <div class="form-field">
     <%= form.label :image %>
