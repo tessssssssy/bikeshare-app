@@ -3,8 +3,8 @@
 <p><%= @listing.title %></p>
 <p>Pickup: <%=@booking.start_date%><p>
 <p>Drop off: <%=@booking.end_date%><p>
-<p>Price: $<%=@booking.calculate_cost%></p>
-<p>Deposit: $<%=@booking.calculate_cost / 10.0 %></p>
+<p>Price: <%=number_to_currency(@booking.calculate_cost)%></p>
+<p>Deposit: <%=number_to_currency(@booking.calculate_cost / 10.0 )%></p>
 <p>Pay deposit to confirm your booking, or cancel</p>
  <%= link_to "Pay Deposit", "", id: "stripe", class: 'button blue-button' %>
  <%= link_to "Cancel Booking", "/listings/#{@booking.listing_id}/bookings/#{@booking.id}" , method: :delete, class: 'button delete-button', :data => {:confirm => 'Are you sure?'}%> 
