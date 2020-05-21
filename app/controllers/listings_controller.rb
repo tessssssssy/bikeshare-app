@@ -5,6 +5,8 @@ class ListingsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_listing, only: %i[show edit update destroy]
   before_action :set_user_listing, only: [:edit]
+
+  # displays listings based on search parameters
   def index
     @listings = []
     if params[:city] && params[:city] != ''
@@ -43,7 +45,6 @@ class ListingsController < ApplicationController
       end
       render json: { data: data, center: [data[0][0], data[0][1]] }
     end
-    # render "/listings?search=#{params[:city]}&start_date=#{params[:start_date]}&end_date=#{params[:end_date]}"
   end
 
   def search
@@ -75,9 +76,18 @@ class ListingsController < ApplicationController
 
   # creates a new listing
   def create
-    location = Location.new(location_params)
-    location.save
-    @listing = current_user.listings.create(listing_params.merge(location_id: location.id))
+    # make a new location based on location params
+    new_location = Location.new(location_params)
+    # check to make sure no location already exists with same full address before saving  
+    # if the location already exists, set new location to the first match (there should be only one match)
+    if matching_locations(new_location).length > 0
+      new_location = matching_locations(new_location).first
+    else
+    # if no matching location exists, save the new location 
+      new_location.save
+    end
+    # create a new listing referenced to the current user, using listing params + new_location
+    @listing = current_user.listings.create(listing_params.merge(location_id: new_location.id))
     if @listing.save
       redirect_to @listing
     else
@@ -96,9 +106,18 @@ class ListingsController < ApplicationController
     @location = Location.find(@listing.location_id)
     # make a new location with updated params
     new_location = Location.new(location_params)
-    # if the location is different from the previous one, save the new location and add it to the listing
-    if @location.full_address != new_location.full_address
+
+    # check if any locations already match the new one 
+    # if the location already exists, set new location to the first match (there should be only one match)
+    if matching_locations(new_location).length > 0
+      new_location = matching_locations(new_location).first
+    else
+    # if no matching location exists, save the new location 
       new_location.save
+    end
+
+    # if the location is different from the previous one, set the listings location to the new one
+    if @location.full_address != new_location.full_address
       @listing.location_id = new_location.id
     end
     if @listing.update(listing_params)
@@ -126,6 +145,12 @@ class ListingsController < ApplicationController
     params.require(:location).permit(:address, :post_code, :city, :country, :listings, :latitude, :longitude)
   end
 
+  # returns matching locations based on a locations full address
+  # used in create/update to check if a new location needs to be created for a listing
+  def matching_locations(new_location)
+    Location.all.select { |location| location.full_address == new_location.full_address }
+  end
+
   def find_listing
     @listing = Listing.find(params[:id])
   end
@@ -135,7 +160,10 @@ class ListingsController < ApplicationController
   def set_user_listing
     id = params[:id]
     @listing = current_user.listings.find_by_id(id)
-
-    redirect_to listings_path if @listing.nil?
+    if @listing.nil?
+      redirect_to listings_path
+    end
   end
 end
+
+
