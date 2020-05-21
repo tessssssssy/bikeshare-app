@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.feature "User creates listing" do
+RSpec.feature 'User creates listing' do
   scenario 'they see the page for the submitted product' do
     product_title = 'Test-O-Matic 3000'
     product_description = 'Unnecessary'
@@ -17,4 +19,3 @@ RSpec.feature "User creates listing" do
     expect(page).to have_content product_name
   end
 end
-

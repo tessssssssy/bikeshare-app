@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Listing, type: :model do
-  subject { described_class.new(
-    title: 'Test Product',
-    description: 'Doodad',
-    instant_pickup: false,
-    user: User.new,
-    location: Location.new
-    # location_id: Location.new(address: '123 fake st', post_code: '1234', city: 'Melbourne', country: 'Australia').id
-  )}
+  subject do
+    described_class.new(
+      title: 'Test Product',
+      description: 'Doodad',
+      instant_pickup: false,
+      user: User.new,
+      location: Location.new
+      # location_id: Location.new(address: '123 fake st', post_code: '1234', city: 'Melbourne', country: 'Australia').id
+    )
+  end
 
   it 'is vaild with valid attributes' do
     expect(subject).to be_valid

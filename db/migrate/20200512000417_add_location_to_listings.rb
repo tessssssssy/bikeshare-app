@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddLocationToListings < ActiveRecord::Migration[6.0]
   def change
     add_reference :listings, :location, null: false, foreign_key: true

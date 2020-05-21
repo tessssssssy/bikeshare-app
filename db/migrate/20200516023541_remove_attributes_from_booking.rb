@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveAttributesFromBooking < ActiveRecord::Migration[6.0]
   def change
     remove_column :bookings, :start_time, :datetime
